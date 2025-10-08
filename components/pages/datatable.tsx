@@ -15,6 +15,7 @@ import {
 } from "@heroui/react";
 import { DynamicTableProps, TableColumnType } from "@/types/table";
 import { PlusIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Datatable({
   columns,
@@ -27,8 +28,9 @@ export default function Datatable({
   totalPage = 0,
   totalRows = 0,
   onPageChange,
+  path,
 }: DynamicTableProps) {
-  // ✅ Add default "No" column
+  const router = useRouter();
   const finalColumns: TableColumnType[] = [
     { key: "no", label: "No", align: "center" },
     ...columns,
@@ -39,7 +41,7 @@ export default function Datatable({
     return (
       <div className="flex flex-col gap-4">
         <div className="flex justify-end gap-3 items-end">
-          <Button color="primary" startContent={<PlusIcon />}>
+          <Button onPress={() => router.push(`/${path}/add`)} color="primary" startContent={<PlusIcon />}>
             Add
           </Button>
         </div>
@@ -89,7 +91,7 @@ export default function Datatable({
             <TableColumn
               key={column.key}
               align={column.align}
-              allowsSorting={column.sortable}
+              width={(column.width || 'auto') as any}
             >
               {column.label}
             </TableColumn>

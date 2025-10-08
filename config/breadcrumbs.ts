@@ -6,6 +6,16 @@ export const breadcrumbsItems = [
   {
     label: "Users",
     path: "/users",
+    children: [
+      {
+        label: "Add Users",
+        path: "/users/add",
+      },
+      {
+        label: "Edit Users",
+        path: "/users/edit",
+      }
+    ]
   },
   {
     label: "Settings",

@@ -1,7 +1,7 @@
 export interface TableColumnType {
   key: string;
   label: string;
-  sortable?: boolean;
+  width?: string | number;
   align?: 'start' | 'center' | 'end';
 }
 
@@ -30,6 +30,7 @@ export interface DynamicTableProps {
   page: number;
   totalPage: number;
   totalRows: number;
+  path?: string;
   onPageChange: (page: number) => void;
   renderCell?: (item: TableRowType, columnKey: React.Key) => React.ReactNode;  // Fix: Use React.Key
 }

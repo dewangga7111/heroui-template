@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 import {
+  Button,
   getKeyValue,
-  Link,
 } from "@heroui/react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,8 +14,12 @@ import { FilterField } from "@/types/filter";
 import { AppDispatch, RootState } from "@/redux/store";
 import { fetchUsers } from "@/redux/api/users-api";
 import { useLoading } from '@/hooks/useLoading';
+import { formatEllipsis } from "@/utils/common";
+import { useRouter } from "next/navigation";
+import { Pencil, Trash2 } from "lucide-react";
 
 export default function UsersPage() {
+  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const store = useSelector((state: RootState) => state.users);
   const isLoading = useLoading('users');
@@ -37,11 +41,11 @@ export default function UsersPage() {
   ];
 
   const columns: TableColumnType[] = [
-    { key: "firstName", label: "Name" },
+    { key: "firstName", label: "Name", width: 200 },
     { key: "username", label: "Username" },
     { key: "email", label: "Email" },
-    { key: "website", label: "Website" },
     { key: "phone", label: "Phone" },
+    { key: "action", label: "action", width: '100px', align: 'center' },
   ];
 
   // contoh render cell untuk nge render column custom
@@ -50,14 +54,34 @@ export default function UsersPage() {
     const cellValue = getKeyValue(item, key);
 
     switch (key) {
-      case "website":
+      case "email":
         return (
-          <Link
-            isExternal
-            href={cellValue}
-          >
-            {cellValue}
-          </Link>
+          <div>
+            {formatEllipsis(cellValue, 20)}
+          </div>
+        );
+      case "action":
+        return (
+          <div className="flex justify-end gap-2">
+            <Button
+              color="primary"
+              className="max-w-[120px]"
+              onPress={() => router.push('/users/edit/' + item.id)}
+              size="sm"
+              isIconOnly
+            >
+              <Pencil size={18}/>
+            </Button>
+            <Button
+              color="danger"
+              className="max-w-[120px]"
+              onPress={() => router.push('/users/edit/' + item.id)}
+              size="sm"
+              isIconOnly
+            >
+              <Trash2 size={18}/>
+            </Button>
+          </div>
         );
 
       default:
@@ -68,10 +92,6 @@ export default function UsersPage() {
   useEffect(() => {
     dispatch(fetchUsers({ ...store.params, ...store.paging }))
   }, []);
-
-  const handlePagination = (page: number) => {
-    dispatch(fetchUsers({ ...store.params, ...store.paging, page }))
-  }
 
   return (
     <div>
@@ -85,6 +105,7 @@ export default function UsersPage() {
         }}
       />
       <Datatable
+        path="users"
         columns={columns}
         rows={store.data}
         renderCell={renderCell}
@@ -92,7 +113,9 @@ export default function UsersPage() {
         page={store.paging.page!}
         totalPage={store.paging.totalPage!}
         totalRows={store.paging.totalRows!}
-        onPageChange={handlePagination}
+        onPageChange={(page: number) => {
+          dispatch(fetchUsers({ ...store.params, ...store.paging, page }))
+        }}
       />
     </div>
   );

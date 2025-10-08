@@ -11,10 +11,25 @@ import {
   BreadcrumbItem
 } from "@heroui/react";
 import { ThemeSwitch } from "@/components/theme-switch";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { EllipsisVertical } from "lucide-react";
 import { breadcrumbsItems } from "../config/breadcrumbs";
 import { useBreadcrumbs, Breadcrumb } from "@/context/breadcrumbs-context";
+
+const getBasePath = (path: string) => {
+  // Remove query/hash
+  let cleanPath = path.split(/[?#]/)[0].replace(/\/$/, "");
+
+  // Split into parts
+  const parts = cleanPath.split("/").filter(Boolean);
+
+  // If the last part looks like an ID (number or UUID-like), remove it
+  if (/^\d+$/.test(parts.at(-1) as any) || /^[A-Za-z0-9_-]{6,}$/.test(parts.at(-1) as any)) {
+    parts.pop();
+  }
+
+  return "/" + parts.join("/");
+}
 
 // 🔑 Recursive function to find the breadcrumb trail
 const findBreadcrumbTrail = (
@@ -25,7 +40,8 @@ const findBreadcrumbTrail = (
   for (const item of items) {
     const newTrail = [...trail, { label: item.label, path: item.path }];
 
-    if (item.path === pathname) {
+    console.log(getBasePath(pathname))
+    if (item.path == getBasePath(pathname)) {
       return newTrail;
     }
 
@@ -40,6 +56,7 @@ const findBreadcrumbTrail = (
 };
 
 export const Navbar = () => {
+  const router = useRouter();
   const pathname = usePathname();
   const { breadcrumbs, setBreadcrumbs } = useBreadcrumbs();
 
@@ -58,7 +75,7 @@ export const Navbar = () => {
         {breadcrumbs.length > 0 && (
           <Breadcrumbs size="lg">
             {breadcrumbs.map((crumb, idx) => (
-              <BreadcrumbItem key={idx} href={crumb.path} isDisabled={!crumb.path} className="font-semibold">
+              <BreadcrumbItem key={idx} onPress={() => router.push(crumb.path as string)} isDisabled={!crumb.path} className="font-semibold">
                 {crumb.label}
               </BreadcrumbItem>
             ))}
