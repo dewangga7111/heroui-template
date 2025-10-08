@@ -69,6 +69,7 @@ export default function UsersPage() {
       })),
     },
     { type: "datepicker", name: "joinedAt", label: "Joined Date" },
+    { type: "daterange", name: "activeRange", label: "Active Range" },
   ];
 
   return (

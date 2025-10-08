@@ -10,12 +10,11 @@ import {
   Form,
   Autocomplete,
   AutocompleteItem,
-  DateRangePicker,
 } from "@heroui/react";
 import { Search } from "lucide-react";
-import { getLocalTimeZone } from "@internationalized/date";
 import { FilterField } from "@/types/filter";
-import DatePicker from "@/components/pages/datepicker";
+import DatePicker from "@/components/pages/date-picker";
+import DateRangePicker from "@/components/pages/date-range-picker";
 
 interface DynamicFilterProps {
   fields: FilterField[];
@@ -33,18 +32,8 @@ export default function DynamicFilter({
   const [formValues, setFormValues] = useState<Record<string, any>>({});
 
   const handleChange = (name: string, value: any) => {
+    console.log(name, value)
     setFormValues((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const formatDate = (date: any) => {
-    if (!date) return null;
-    const jsDate = date.toDate?.(getLocalTimeZone());
-    if (!jsDate) return null;
-
-    const day = String(jsDate.getDate()).padStart(2, "0");
-    const month = String(jsDate.getMonth() + 1).padStart(2, "0");
-    const year = jsDate.getFullYear();
-    return `${day}-${month}-${year}`;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -53,16 +42,7 @@ export default function DynamicFilter({
     const formattedValues: Record<string, any> = {};
     Object.entries(formValues).forEach(([key, value]) => {
       if (!value) return;
-      if (value?.start && value?.end) {
-        formattedValues[key] = {
-          start: formatDate(value.start),
-          end: formatDate(value.end),
-        };
-      } else if (value?.toDate) {
-        formattedValues[key] = formatDate(value);
-      } else {
-        formattedValues[key] = value;
-      }
+      formattedValues[key] = value;
     });
 
     onFilter(formattedValues);
@@ -135,7 +115,6 @@ export default function DynamicFilter({
                       <DateRangePicker
                         key={field.name}
                         label={field.label}
-                        labelPlacement="outside"
                         value={value ?? null}
                         onChange={(v) => handleChange(field.name, v)}
                       />
