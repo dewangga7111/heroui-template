@@ -7,6 +7,7 @@ import { Providers } from "./providers";
 import { fontSans } from "@/config/fonts";
 import { Navbar } from "@/components/navbar";
 import Sidebar from "@/components/sidebar/sidebar";
+import Footer from "@/components/footer";
 import { Suspense } from "react";
 import { BreadcrumbProvider } from "@/context/breadcrumbs-context";
 import { PermissionProvider } from "@/context/permission-context";
@@ -42,7 +43,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ReduxProvider>
           <Suspense fallback={<Loading />}>
             <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-              {/* ✅ Global breadcrumb state available */}
               <PermissionProvider>
                 <BreadcrumbProvider>
                   <div className="flex min-h-screen w-full">
@@ -56,10 +56,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                         <Navbar />
                       </div>
 
-                      {/* Page children */}
+                      {/* Page content */}
                       <main className="flex-grow px-3 py-3 overflow-y-auto bg-background">
                         {children}
                       </main>
+
+                      {/* ✅ Footer Component */}
+                      <Footer />
                     </div>
                   </div>
                 </BreadcrumbProvider>

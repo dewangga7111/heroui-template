@@ -20,6 +20,22 @@ export default function UsersPage() {
   const store = useSelector((state: RootState) => state.users);
   const isLoading = useLoading('users');
 
+  const fields: FilterField[] = [
+    { type: "input", name: "name", label: "Name" },
+    {
+      type: "autocomplete",
+      name: "role",
+      label: "Role",
+      placeholder: "Select role",
+      options: (store.data ?? []).map((opt) => ({
+        label: opt.firstName,
+        value: opt.firstName
+      })),
+    },
+    { type: "datepicker", name: "joinedAt", label: "Joined Date" },
+    { type: "daterange", name: "activeRange", label: "Active Range" },
+  ];
+
   const columns: TableColumnType[] = [
     { key: "firstName", label: "Name" },
     { key: "username", label: "Username" },
@@ -28,6 +44,7 @@ export default function UsersPage() {
     { key: "phone", label: "Phone" },
   ];
 
+  // contoh render cell untuk nge render column custom
   const renderCell = (item: TableRowType, columnKey: React.Key) => {
     const key = String(columnKey);
     const cellValue = getKeyValue(item, key);
@@ -55,22 +72,6 @@ export default function UsersPage() {
   const handlePagination = (page: number) => {
     dispatch(fetchUsers({ ...store.params, ...store.paging, page }))
   }
-
-  const fields: FilterField[] = [
-    { type: "input", name: "name", label: "Name" },
-    {
-      type: "autocomplete",
-      name: "role",
-      label: "Role",
-      placeholder: "Select role",
-      options: (store.data ?? []).map((opt) => ({
-        label: opt.firstName,
-        value: opt.firstName
-      })),
-    },
-    { type: "datepicker", name: "joinedAt", label: "Joined Date" },
-    { type: "daterange", name: "activeRange", label: "Active Range" },
-  ];
 
   return (
     <div>

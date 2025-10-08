@@ -7,6 +7,7 @@ import { usePermission } from "@/context/permission-context"; // ✅ imported gl
 // This context is just a placeholder (no values exposed)
 const RouteGuardContext = createContext<boolean | undefined>(undefined);
 
+// context ini untuk menjaga routing bedasarkan permission
 export const RouteGuardProvider = ({
   children,
   pageId,

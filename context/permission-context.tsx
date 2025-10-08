@@ -8,6 +8,7 @@ type PermissionContextType = {
 
 const PermissionContext = createContext<PermissionContextType | undefined>(undefined);
 
+// context ini untuk menyediakan permission untuk kebutuhan penjagaan
 export const PermissionProvider = ({ children }: { children: React.ReactNode }) => {
   const [permissions, setPermissions] = useState<string[]>([]);
 
