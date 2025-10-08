@@ -11,8 +11,10 @@ import {
   getKeyValue,
   Spinner,
   Pagination,
+  Button,
 } from "@heroui/react";
-import { DynamicTableProps, TableColumnType, TableRowType } from "@/types/table";
+import { DynamicTableProps, TableColumnType } from "@/types/table";
+import { PlusIcon } from "lucide-react";
 
 export default function Datatable({
   columns,
@@ -26,28 +28,61 @@ export default function Datatable({
   totalRows = 0,
   onPageChange,
 }: DynamicTableProps) {
-  // ✅ Add default "No" column in front
+  // ✅ Add default "No" column
   const finalColumns: TableColumnType[] = [
     { key: "no", label: "No", align: "center" },
     ...columns,
   ];
 
+  // Add top content (like add button)
+  const topContent = React.useMemo(() => {
+    return (
+      <div className="flex flex-col gap-4">
+        <div className="flex justify-end gap-3 items-end">
+          <Button color="primary" startContent={<PlusIcon />}>
+            Add
+          </Button>
+        </div>
+      </div>
+    );
+  }, []);
+
+  // Calculate table info range
+  const startRow = totalRows === 0 ? 0 : (page - 1) * 10 + 1;
+  const endRow = Math.min(page * 10, totalRows);
+
+  const bottomContent = React.useMemo(() => {
+    return (
+      <div className="flex w-full justify-between items-center px-2">
+        {/* ✅ Left side: table info */}
+        <p className="text-sm text-default-500">
+          {totalRows > 0
+            ? `Showing ${startRow}–${endRow} of ${totalRows} entries`
+            : "No data to display"}
+        </p>
+
+        {/* ✅ Right side: pagination */}
+        {totalPage > 0 ? (
+          <Pagination
+            showControls
+            showShadow
+            color="primary"
+            page={page}
+            total={totalPage}
+            onChange={(v: number) => onPageChange?.(v)}
+          />
+        ) : (
+          <div />
+        )}
+      </div>
+    );
+  }, [page, totalPage, totalRows]);
+
   return (
     <div className={className}>
       <Table
-        bottomContent={(
-          <div className="flex w-full justify-end items-center">
-            {/* <span className="text-gray-400">{totalRows}</span> */}
-            {totalPage > 0 ? <Pagination
-              showControls
-              showShadow
-              color="primary"
-              page={page}
-              total={totalPage}
-              onChange={(v: number) => onPageChange?.(v)}
-            /> : <div />}
-          </div>
-        )}
+        topContent={topContent}
+        bottomContent={bottomContent}
       >
         <TableHeader columns={finalColumns}>
           {(column) => (
@@ -68,7 +103,6 @@ export default function Datatable({
           loadingContent={<Spinner size="lg" variant="wave" />}
         >
           {(item) => {
-            // ✅ Get row index manually
             const index = rows.indexOf(item);
             return (
               <TableRow key={item.key || index}>

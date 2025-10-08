@@ -148,12 +148,12 @@ export default function DynamicFilter({
                     })}
                   </div>
 
-                  <div className="flex justify-end">
+                  <div className="flex justify-end gap-2">
                     <Button
                       type="button"
                       color="primary"
                       variant="flat"
-                      className="max-w-[120px] mr-2"
+                      className="max-w-[120px]"
                       onPress={handleClear}
                     >
                       Clear

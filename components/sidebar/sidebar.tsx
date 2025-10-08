@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button, Card, Tooltip } from "@heroui/react";
+import { Button, Card, Tooltip, ScrollShadow } from "@heroui/react";
 import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
@@ -78,7 +78,7 @@ export default function Sidebar() {
       </div>
 
       {/* Menu */}
-      <div aria-label="Sidebar menu" className="flex-grow">
+      <ScrollShadow aria-label="Sidebar menu" className="flex-grow">
         {menus
           .filter((item) => shouldShowMenu(item)) // ✅ show only if allowed (direct or child)
           .map((item) => (
@@ -96,7 +96,7 @@ export default function Sidebar() {
               mounted={mounted}
             />
           ))}
-      </div>
+      </ScrollShadow>
     </Card>
   );
 }
