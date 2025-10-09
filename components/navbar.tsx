@@ -40,7 +40,6 @@ const findBreadcrumbTrail = (
   for (const item of items) {
     const newTrail = [...trail, { label: item.label, path: item.path }];
 
-    console.log(getBasePath(pathname))
     if (item.path == getBasePath(pathname)) {
       return newTrail;
     }
@@ -68,7 +67,7 @@ export const Navbar = () => {
   return (
     <HeroNavbar
       maxWidth="full"
-      className="bg-background backdrop-blur-md rounded-bl-lg rounded-br-lg shadow-sm"
+      className="backdrop-blur-md rounded-bl-lg rounded-br-lg shadow-sm"
       position="sticky"
     >
       <NavbarBrand>
