@@ -45,7 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
               <PermissionProvider>
                 <BreadcrumbProvider>
-                  <div className="flex min-h-screen w-full bg-gradient-to-b from-stone-50 via-stone-100 to-stone-50">
+                  <div className="flex min-h-screen w-full bg-gradient-to-b from-stone-50 via-stone-100 to-stone-50 dark:bg-black dark:bg-none">
                     {/* Sidebar always on the left */}
                     <Sidebar />
 
