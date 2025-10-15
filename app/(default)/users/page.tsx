@@ -16,6 +16,7 @@ import { AppDispatch, RootState } from "@/redux/store";
 import { fetchUsers } from "@/redux/api/users-api";
 import { useLoading } from '@/hooks/useLoading';
 import { formatEllipsis, showSuccessToast, showErrorToast } from "@/utils/common";
+import { useConfirmation } from "@/context/confirmation-context";
 
 import { useRouter } from "next/navigation";
 import { Pencil, Trash2 } from "lucide-react";
@@ -25,6 +26,7 @@ export default function UsersPage() {
   const dispatch = useDispatch<AppDispatch>();
   const store = useSelector((state: RootState) => state.users);
   const isLoading = useLoading('users');
+  const { confirm } = useConfirmation();
 
   const fields: FilterField[] = [
     { type: "input", name: "name", label: "Name" },
@@ -72,18 +74,21 @@ export default function UsersPage() {
               size="sm"
               isIconOnly
             >
-              <Pencil size={18}/>
+              <Pencil size={18} />
             </Button>
             <Button
               color="danger"
               className="max-w-[120px]"
-              onPress={() => showErrorToast('Deleted Successfully')}
+              onPress={() =>
+                confirm("Are you sure you want to delete this item?", () => {
+                  showSuccessToast("Item deleted!");
+                })}
               size="sm"
               isIconOnly
             >
-              <Trash2 size={18}/>
+              <Trash2 size={18} />
             </Button>
-          </div>
+          </div >
         );
 
       default:

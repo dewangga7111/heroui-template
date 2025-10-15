@@ -1,4 +1,5 @@
-import { Tooltip, addToast } from "@heroui/react";
+import { Tooltip, addToast, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@heroui/react";
+import { useState } from "react";
 
 export const formatEllipsis = (text: string, maxChars: number = 12): React.ReactNode => {
   if (!text) return "-";
