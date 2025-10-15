@@ -7,9 +7,7 @@ import { useTheme } from "next-themes";
 import { useIsSSR } from "@react-aria/ssr";
 import { Tooltip } from "@heroui/react";
 import clsx from "clsx";
-
-import { SunFilledIcon, MoonFilledIcon } from "@/components/icons";
-
+import { Moon, Sun } from "lucide-react";
 export interface ThemeSwitchProps {
   className?: string;
   classNames?: SwitchProps["classNames"];
@@ -81,7 +79,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
             delay={500}
             size="sm"
           >
-            <SunFilledIcon size={22} />
+            <Sun size={22} />
           </Tooltip>
         ) : (
           <Tooltip
@@ -93,7 +91,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
             delay={500}
             size="sm"
           >
-            <MoonFilledIcon size={22} />
+            <Moon size={22} />
           </Tooltip>
         )}
       </div>

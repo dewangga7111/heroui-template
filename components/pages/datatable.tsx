@@ -28,7 +28,7 @@ export default function Datatable({
   totalPage = 0,
   totalRows = 0,
   onPageChange,
-  path,
+  doAdd,
 }: DynamicTableProps) {
   const router = useRouter();
   const finalColumns: TableColumnType[] = [
@@ -41,7 +41,7 @@ export default function Datatable({
     return (
       <div className="flex flex-col gap-4">
         <div className="flex justify-end gap-3 items-end">
-          <Button onPress={() => router.push(`/${path}/add`)} color="primary" startContent={<PlusIcon />}>
+          <Button onPress={doAdd} color="primary" startContent={<PlusIcon />}>
             Add
           </Button>
         </div>

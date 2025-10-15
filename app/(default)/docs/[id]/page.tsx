@@ -1,6 +1,6 @@
 'use client'
 
-import { title } from "@/components/primitives";
+import { title } from "@/utils/primitives";
 import { useParams } from 'next/navigation'
 
 export default function PricingPage() {

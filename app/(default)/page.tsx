@@ -3,10 +3,9 @@ import { Snippet } from "@heroui/snippet";
 import { Code } from "@heroui/code";
 import { Card, CardBody } from "@heroui/card";
 import { button as buttonStyles } from "@heroui/theme";
-import { Palette, Shield } from "lucide-react";
+import { Palette, Shield, Github } from "lucide-react";
 
-import { title, subtitle } from "@/components/primitives";
-import { GithubIcon } from "@/components/icons";
+import { title, subtitle } from "@/utils/primitives";
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -45,7 +44,7 @@ export default function Home() {
           isExternal
           className={buttonStyles({ variant: "bordered", radius: "full" })}
         >
-          <GithubIcon size={20} />
+          <Github size={20} />
           GitHub
         </Link>
       </div>

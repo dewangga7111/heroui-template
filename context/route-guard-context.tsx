@@ -1,8 +1,10 @@
 "use client";
 
+import constants from "@/utils/constants"
+import { usePermission } from "@/context/permission-context"; // ✅ imported global one
+
 import { createContext, useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { usePermission } from "@/context/permission-context"; // ✅ imported global one
 
 // This context is just a placeholder (no values exposed)
 const RouteGuardContext = createContext<boolean | undefined>(undefined);
@@ -23,7 +25,7 @@ export const RouteGuardProvider = ({
 
     if (!permissions.includes(pageId)) {
       console.warn(`🚫 No permission for: ${pageId}`);
-      router.push("/misc/403");
+      router.push(constants.path.UNAUTHORIZED);
     }
   }, [pageId, permissions, router]);
 

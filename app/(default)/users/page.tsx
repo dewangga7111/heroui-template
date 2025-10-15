@@ -9,12 +9,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Datatable from "@/components/pages/datatable";
 import Filter from "@/components/pages/filter";
+import constants from "@/utils/constants"
 import { TableColumnType, TableRowType } from "@/types/table";
 import { FilterField } from "@/types/filter";
 import { AppDispatch, RootState } from "@/redux/store";
 import { fetchUsers } from "@/redux/api/users-api";
 import { useLoading } from '@/hooks/useLoading';
 import { formatEllipsis } from "@/utils/common";
+
 import { useRouter } from "next/navigation";
 import { Pencil, Trash2 } from "lucide-react";
 
@@ -66,7 +68,7 @@ export default function UsersPage() {
             <Button
               color="primary"
               className="max-w-[120px]"
-              onPress={() => router.push('/users/edit/' + item.id)}
+              onPress={() => router.push(`${constants.path.USERS}/edit/${item.id}`)}
               size="sm"
               isIconOnly
             >
@@ -75,7 +77,7 @@ export default function UsersPage() {
             <Button
               color="danger"
               className="max-w-[120px]"
-              onPress={() => router.push('/users/edit/' + item.id)}
+              onPress={() => router.push(`${constants.path.USERS}/edit/${item.id}`)}
               size="sm"
               isIconOnly
             >
@@ -105,7 +107,6 @@ export default function UsersPage() {
         }}
       />
       <Datatable
-        path="users"
         columns={columns}
         rows={store.data}
         renderCell={renderCell}
@@ -116,6 +117,7 @@ export default function UsersPage() {
         onPageChange={(page: number) => {
           dispatch(fetchUsers({ ...store.params, ...store.paging, page }))
         }}
+        doAdd={() => router.push(`${constants.path.USERS}/add`)}
       />
     </div>
   );
