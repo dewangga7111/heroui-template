@@ -15,7 +15,7 @@ import { FilterField } from "@/types/filter";
 import { AppDispatch, RootState } from "@/redux/store";
 import { fetchUsers } from "@/redux/api/users-api";
 import { useLoading } from '@/hooks/useLoading';
-import { formatEllipsis } from "@/utils/common";
+import { formatEllipsis, showSuccessToast, showErrorToast } from "@/utils/common";
 
 import { useRouter } from "next/navigation";
 import { Pencil, Trash2 } from "lucide-react";
@@ -77,7 +77,7 @@ export default function UsersPage() {
             <Button
               color="danger"
               className="max-w-[120px]"
-              onPress={() => router.push(`${constants.path.USERS}/edit/${item.id}`)}
+              onPress={() => showErrorToast('Deleted Successfully')}
               size="sm"
               isIconOnly
             >

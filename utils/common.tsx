@@ -1,4 +1,4 @@
-import { Tooltip } from "@heroui/react";
+import { Tooltip, addToast } from "@heroui/react";
 
 export const formatEllipsis = (text: string, maxChars: number = 12): React.ReactNode => {
   if (!text) return "-";
@@ -13,3 +13,21 @@ export const formatEllipsis = (text: string, maxChars: number = 12): React.React
     </Tooltip>
   );
 };
+
+export const showSuccessToast = (msg: string) => {
+  addToast({
+    title: "Success",
+    description: msg,
+    color: 'success',
+    timeout: 3000,
+  })
+}
+
+export const showErrorToast = (msg: string) => {
+  addToast({
+    title: "Error",
+    description: msg,
+    color: 'danger',
+    timeout: 3000,
+  })
+}

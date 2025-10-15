@@ -28,7 +28,7 @@ export default function DynamicFilter({
   fields,
   onFilter,
   onClear,
-  gridCols = 4,
+  gridCols = 3,
 }: DynamicFilterProps) {
   const [formValues, setFormValues] = useState<Record<string, any>>({});
   const [isOpen, setIsOpen] = useState(false);
@@ -87,7 +87,7 @@ export default function DynamicFilter({
             <CardBody>
               <Form id="filterForm" onSubmit={handleSubmit}>
                 <div className="w-full flex flex-col gap-4">
-                  <div className={`grid grid-cols-4 gap-4`}>
+                  <div className={`grid grid-cols-${gridCols} gap-4`}>
                     {fields.map((field) => {
                       const value = formValues[field.name];
 
