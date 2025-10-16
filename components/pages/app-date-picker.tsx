@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Input, Popover, PopoverTrigger, PopoverContent, Calendar } from "@heroui/react";
+import { Popover, PopoverTrigger, PopoverContent, Calendar } from "@heroui/react";
 import { CalendarDays } from "lucide-react";
 import { parseDate, getLocalTimeZone } from "@internationalized/date";
 import { format } from "date-fns";
+import AppTextInput from "./app-text-input";
 
 type DateInputProps = {
   label?: string;
@@ -13,7 +14,7 @@ type DateInputProps = {
   onChange?: (val: string) => void;
 };
 
-export default function DatePicker({
+export default function AppDatePicker({
   label = "Date",
   placeholder = "DD-MM-YYYY",
   value,
@@ -42,12 +43,11 @@ export default function DatePicker({
             {/* trigger disini karena kalo trigger di input placeholder di input ketutup PopoverTrigger */}
             <div className="w-full h-[40px] cursor-pointer absolute z-1 bottom-0"></div> 
           </PopoverTrigger>
-          <Input
+          <AppTextInput
             label={label}
             readOnly
             placeholder={placeholder}
             value={selectedDate || ""}
-            labelPlacement="outside-top"
             startContent={<CalendarDays size={18} />}
             className="cursor-pointer"
             classNames={{

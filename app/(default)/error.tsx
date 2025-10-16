@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
+import { title } from "@/utils/primitives";
+import { Button } from "@heroui/react";
+import { RefreshCcw } from "lucide-react";
 
 export default function Error({
   error,
@@ -16,16 +19,19 @@ export default function Error({
   }, [error]);
 
   return (
-    <div>
-      <h2>Something went wrong!!!</h2>
-      <button
-        onClick={
+    <div className="flex flex-col justify-center items-center h-full">
+      <span className={title({ size: 'sm' })} >Something went wrong!!!</span>
+      <Button
+        className="mt-4"
+        color="primary"
+        startContent={<RefreshCcw size={15} />}
+        onPress={
           // Attempt to recover by trying to re-render the segment
           () => reset()
         }
       >
-        Try again
-      </button>
+        Refresh
+      </Button>
     </div>
   );
 }

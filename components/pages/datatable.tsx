@@ -32,7 +32,7 @@ export default function Datatable({
 }: DynamicTableProps) {
   const router = useRouter();
   const finalColumns: TableColumnType[] = [
-    { key: "no", label: "No", align: "center" },
+    { key: "no", label: "No", align: "center", width: 50 },
     ...columns,
   ];
 

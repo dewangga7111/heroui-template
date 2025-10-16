@@ -59,16 +59,16 @@ const usersSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
-    setPagination: (
-      state,
-      action: PayloadAction<TablePaging>
-    ) => {
-      if (action.payload.page !== undefined) state.paging.page = action.payload.page;
-      if (action.payload.totalPage !== undefined) state.paging.totalPage = action.payload.totalPage;
-      if (action.payload.totalRows !== undefined) state.paging.totalRows = action.payload.totalRows;
-    },
+    // setPagination: (
+    //   state,
+    //   action: PayloadAction<TablePaging>
+    // ) => {
+    //   if (action.payload.page !== undefined) state.paging.page = action.payload.page;
+    //   if (action.payload.totalPage !== undefined) state.paging.totalPage = action.payload.totalPage;
+    //   if (action.payload.totalRows !== undefined) state.paging.totalRows = action.payload.totalRows;
+    // },
   },
 });
 
-export const { setLoading, setUsers, selectUser, clearUsers, errorUsers, setPagination } = usersSlice.actions;
+export const { setLoading, setUsers, selectUser, clearUsers, errorUsers } = usersSlice.actions;
 export default usersSlice.reducer;

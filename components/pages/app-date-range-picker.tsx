@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import {
-  Input,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -11,6 +10,7 @@ import {
 import { CalendarDays } from "lucide-react";
 import { parseDate, getLocalTimeZone } from "@internationalized/date";
 import { format } from "date-fns";
+import AppTextInput from "./app-text-input";
 
 type DateRangeValue = {
   start: string | null;
@@ -24,7 +24,7 @@ type DateRangeInputProps = {
   onChange?: (val: DateRangeValue | null) => void;
 };
 
-export default function DateRangePicker({
+export default function AppDateRangePicker({
   label = "Date Range",
   placeholder = "DD-MM-YYYY - DD-MM-YYYY",
   value,
@@ -71,12 +71,11 @@ export default function DateRangePicker({
             <div className="w-full h-[40px] cursor-pointer absolute z-10 bottom-0"></div>
           </PopoverTrigger>
 
-          <Input
+          <AppTextInput
             label={label}
             readOnly
             placeholder={placeholder}
             value={displayValue}
-            labelPlacement="outside-top"
             startContent={<CalendarDays size={18} />}
             className="cursor-pointer"
             classNames={{
@@ -92,13 +91,13 @@ export default function DateRangePicker({
             value={
               selectedRange?.start && selectedRange?.end
                 ? {
-                    start: parseDate(
-                      selectedRange.start.split("-").reverse().join("-")
-                    ),
-                    end: parseDate(
-                      selectedRange.end.split("-").reverse().join("-")
-                    ),
-                  }
+                  start: parseDate(
+                    selectedRange.start.split("-").reverse().join("-")
+                  ),
+                  end: parseDate(
+                    selectedRange.end.split("-").reverse().join("-")
+                  ),
+                }
                 : undefined
             }
             onChange={handleSelect}

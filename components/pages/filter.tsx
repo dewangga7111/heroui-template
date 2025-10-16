@@ -14,21 +14,20 @@ import {
 import { Search, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FilterField } from "@/types/filter";
-import DatePicker from "@/components/pages/date-picker";
-import DateRangePicker from "@/components/pages/date-range-picker";
+import AppDatePicker from "@/components/pages/app-date-picker";
+import AppDateRangePicker from "@/components/pages/app-date-range-picker";
+import AppAutocomplete from "./app-autocomplete";
 
 interface DynamicFilterProps {
   fields: FilterField[];
   onFilter: (data: Record<string, any>) => void;
   onClear: () => void;
-  gridCols?: number;
 }
 
 export default function DynamicFilter({
   fields,
   onFilter,
   onClear,
-  gridCols = 3,
 }: DynamicFilterProps) {
   const [formValues, setFormValues] = useState<Record<string, any>>({});
   const [isOpen, setIsOpen] = useState(false);
@@ -87,7 +86,7 @@ export default function DynamicFilter({
             <CardBody>
               <Form id="filterForm" onSubmit={handleSubmit}>
                 <div className="w-full flex flex-col gap-4">
-                  <div className={`grid grid-cols-${gridCols} gap-4`}>
+                  <div className={`grid grid-cols-3 gap-4`}>
                     {fields.map((field) => {
                       const value = formValues[field.name];
 
@@ -106,25 +105,19 @@ export default function DynamicFilter({
 
                         case "autocomplete":
                           return (
-                            <Autocomplete
+                            <AppAutocomplete
                               key={field.name}
                               label={field.label}
-                              labelPlacement="outside-top"
                               placeholder={field.placeholder}
                               selectedKey={value || ""}
+                              items={field.options ?? []}
                               onSelectionChange={(v) => handleChange(field.name, v)}
-                            >
-                              {(field.options ?? []).map((opt) => (
-                                <AutocompleteItem key={opt.value}>
-                                  {opt.label}
-                                </AutocompleteItem>
-                              ))}
-                            </Autocomplete>
+                            />
                           );
 
                         case "datepicker":
                           return (
-                            <DatePicker
+                            <AppDatePicker
                               key={field.name}
                               label={field.label}
                               value={value ?? null}
@@ -134,7 +127,7 @@ export default function DynamicFilter({
 
                         case "daterange":
                           return (
-                            <DateRangePicker
+                            <AppDateRangePicker
                               key={field.name}
                               label={field.label}
                               value={value ?? null}

@@ -20,6 +20,11 @@ export interface TablePaging {
   limit?: number,
 }
 
+export interface RenderCellProps {
+  item: TableRowType;
+  columnKey: React.Key;
+};
+
 export interface DynamicTableProps {
   columns: TableColumnType[];
   rows: TableRowType[];
