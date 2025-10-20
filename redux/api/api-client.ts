@@ -1,4 +1,5 @@
 // src/redux/api/apiClient.ts
+import { showErrorToast } from "@/utils/common";
 import axios from "axios";
 
 export const apiClient = axios.create({
@@ -21,7 +22,9 @@ apiClient.interceptors.request.use((config) => {
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error("API error:", error.response?.data || error.message);
+    const message = `API error: ${error.response?.data || error.message}`;
+    console.error(message);
+    showErrorToast(message);
     return Promise.reject(error);
   }
 );

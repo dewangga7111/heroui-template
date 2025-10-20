@@ -8,6 +8,7 @@ interface UsersState {
   params: TableFilter;
   paging: TablePaging;
   loading: boolean;
+  success: boolean;
   error: string;
   selectedUserId: number | null;
 }
@@ -22,6 +23,7 @@ const initialState: UsersState = {
     limit: 10,
   },
   loading: false,
+  success: false,
   error: '',
   selectedUserId: null,
 };
@@ -52,12 +54,17 @@ const usersSlice = createSlice({
     selectUser: (state, action: PayloadAction<number | null>) => {
       state.selectedUserId = action.payload;
     },
-    clearUsers: (state) => {
-      state.data = [];
-    },
     errorUsers: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
       state.loading = false;
+    },
+    successUsers: (state) => {
+      state.success = true;
+      state.loading = false;
+    },
+    resetUsers: (state) => {
+      state.success = false;
+      state.error = '';
     },
     // setPagination: (
     //   state,
@@ -70,5 +77,5 @@ const usersSlice = createSlice({
   },
 });
 
-export const { setLoading, setUsers, selectUser, clearUsers, errorUsers } = usersSlice.actions;
+export const { setLoading, setUsers, selectUser, successUsers, errorUsers, resetUsers } = usersSlice.actions;
 export default usersSlice.reducer;

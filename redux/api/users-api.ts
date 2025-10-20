@@ -5,6 +5,7 @@ import {
   setLoading,
   setUsers,
   errorUsers,
+  resetUsers,
 } from "@/redux/slices/users-slice";
 import { User } from "@/types/user";
 import { TableFilter } from "@/types/table";
@@ -46,6 +47,8 @@ export const createUser =
       await apiClient.post("/users", user);
     } catch (error: any) {
       dispatch(errorUsers(error.response?.data?.message || error.message));
+    } finally {
+      dispatch(resetUsers())
     }
   };
 
@@ -56,6 +59,8 @@ export const updateUser =
       await apiClient.put(`/users/${id}`, user);
     } catch (error: any) {
       dispatch(errorUsers(error.response?.data?.message || error.message));
+    } finally {
+      dispatch(resetUsers())
     }
   };
 

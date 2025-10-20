@@ -1,21 +1,43 @@
 "use client";
 
-import { Autocomplete, AutocompleteItem, Button, Card, CardBody, Form, Input } from "@heroui/react";
+import { Button, Card, CardBody, Form } from "@heroui/react";
 import { Save } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
-import AppDatePicker from "@/components/pages/app-date-picker";
 import AppTextInput from "@/components/pages/app-text-input";
 import AppTextarea from "@/components/pages/app-textarea";
+import { showErrorToast, showSuccessToast } from "@/utils/common";
+import { useConfirmation } from "@/context/confirmation-context";
+import { RootState } from "@/redux/store";
 
 export default function BlogPage() {
   const router = useRouter();
+  const store = useSelector((state: RootState) => state.users);
+  const { confirm } = useConfirmation();
+
+  useEffect(() => {
+    if (store.success) {
+      showSuccessToast('Data saved successfully')
+      router.push("/users")
+    } else if (store.error) {
+      showErrorToast(store.error)
+    }
+  }, [store.loading])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let data = Object.fromEntries(new FormData(e.currentTarget));
-    console.log(data)
+    const data = Object.fromEntries(new FormData(e.currentTarget));
+    confirm("Are you sure want to save this data?", () => {
+      doSave(data)
+    });
   };
+
+  const doSave = (data: any) => {
+    showSuccessToast("Data saved successfully!");
+    router.push("/users");
+  }
 
   return (
     <div>

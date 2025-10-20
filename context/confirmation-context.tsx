@@ -15,6 +15,7 @@ export const ConfirmationProvider = ({ children }: { children: ReactNode }) => {
   const [onConfirmAction, setOnConfirmAction] = useState<(() => void) | null>(null);
 
   const confirm = (msg: string, onConfirm: () => void) => {
+    //close all active popovers
     window.dispatchEvent(new Event("close-all-popovers"));
     setMessage(msg);
     setOnConfirmAction(() => onConfirm);

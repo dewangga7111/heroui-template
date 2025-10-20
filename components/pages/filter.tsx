@@ -5,11 +5,8 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Input,
   Button,
   Form,
-  Autocomplete,
-  AutocompleteItem,
 } from "@heroui/react";
 import { Search, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -17,6 +14,7 @@ import { FilterField } from "@/types/filter";
 import AppDatePicker from "@/components/pages/app-date-picker";
 import AppDateRangePicker from "@/components/pages/app-date-range-picker";
 import AppAutocomplete from "./app-autocomplete";
+import AppTextInput from "./app-text-input";
 
 interface DynamicFilterProps {
   fields: FilterField[];
@@ -93,11 +91,10 @@ export default function DynamicFilter({
                       switch (field.type) {
                         case "input":
                           return (
-                            <Input
+                            <AppTextInput
                               key={field.name}
                               label={field.label}
                               placeholder={field.placeholder}
-                              labelPlacement="outside-top"
                               value={value || ""}
                               onChange={(e) => handleChange(field.name, e.target.value)}
                             />
