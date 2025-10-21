@@ -10,7 +10,6 @@ interface UsersState {
   loading: boolean;
   success: boolean;
   error: string;
-  selectedUserId: number | null;
 }
 
 const initialState: UsersState = {
@@ -25,7 +24,6 @@ const initialState: UsersState = {
   loading: false,
   success: false,
   error: '',
-  selectedUserId: null,
 };
 
 const usersSlice = createSlice({
@@ -51,9 +49,6 @@ const usersSlice = createSlice({
       state.loading = false;
       state.error = '';
     },
-    selectUser: (state, action: PayloadAction<number | null>) => {
-      state.selectedUserId = action.payload;
-    },
     errorUsers: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
       state.loading = false;
@@ -77,5 +72,5 @@ const usersSlice = createSlice({
   },
 });
 
-export const { setLoading, setUsers, selectUser, successUsers, errorUsers, resetUsers } = usersSlice.actions;
+export const { setLoading, setUsers, successUsers, errorUsers, resetUsers } = usersSlice.actions;
 export default usersSlice.reducer;

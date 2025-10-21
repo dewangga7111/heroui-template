@@ -12,6 +12,7 @@ export default function SidebarMenuItem({
   openMenus,
   toggleMenu,
   mounted,
+  onClose,
 }: any) {
   const router = useRouter();
   const isOpen = openMenus[item.key] || false;
@@ -64,7 +65,10 @@ export default function SidebarMenuItem({
             {item.children.map((child: any) => (
               <div
                 key={child.key}
-                onClick={() => router.push(child.path!)}
+                onClick={() => {
+                  onClose?.()
+                  router.push(child.path!)
+                }}
               >
                 <div
                   className={`flex py-2 px-3 my-1 items-center rounded-md cursor-pointer text-tiny mr-2
@@ -91,7 +95,10 @@ export default function SidebarMenuItem({
   return (
     <div
       key={item.key}
-      onClick={() => router.push(item.path!)}
+      onClick={() => {
+        onClose?.()
+        router.push(item.path!)
+      }}
       className="flex items-center"
     >
       {item.path === firstPath && open ? (
