@@ -15,6 +15,7 @@ import AppDatePicker from "@/components/pages/app-date-picker";
 import AppDateRangePicker from "@/components/pages/app-date-range-picker";
 import AppAutocomplete from "./app-autocomplete";
 import AppTextInput from "./app-text-input";
+import { actionButtons, button } from "@/utils/primitives";
 
 interface DynamicFilterProps {
   fields: FilterField[];
@@ -84,7 +85,7 @@ export default function DynamicFilter({
             <CardBody>
               <Form id="filterForm" onSubmit={handleSubmit}>
                 <div className="w-full flex flex-col gap-4">
-                  <div className={`grid grid-cols-3 gap-4`}>
+                  <div className={`grid sm:grid-cols-3 gap-4`}>
                     {fields.map((field) => {
                       const value = formValues[field.name];
 
@@ -138,12 +139,12 @@ export default function DynamicFilter({
                     })}
                   </div>
 
-                  <div className="flex justify-end gap-2">
+                  <div className={actionButtons()}>
                     <Button
                       type="button"
                       color="primary"
                       variant="flat"
-                      className="max-w-[120px]"
+                      className={button()}
                       onPress={handleClear}
                     >
                       Clear
@@ -151,7 +152,7 @@ export default function DynamicFilter({
                     <Button
                       type="submit"
                       color="primary"
-                      className="max-w-[120px]"
+                      className={button()}
                       startContent={<Search size={15} />}
                     >
                       Search

@@ -51,3 +51,11 @@ export const subtitle = tv({
     fullWidth: true,
   },
 });
+
+export const actionButtons = tv({
+  base: "flex gap-2 sm:justify-end max-sm:w-full max-sm:mt-5"
+})
+
+export const button = tv({
+  base: "sm:max-w-[120px] max-sm:w-full"
+})

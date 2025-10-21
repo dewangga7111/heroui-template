@@ -11,6 +11,7 @@ import AppTextarea from "@/components/pages/app-textarea";
 import { showErrorToast, showSuccessToast } from "@/utils/common";
 import { useConfirmation } from "@/context/confirmation-context";
 import { RootState } from "@/redux/store";
+import { actionButtons, button } from "@/utils/primitives";
 
 export default function BlogPage() {
   const router = useRouter();
@@ -45,7 +46,7 @@ export default function BlogPage() {
         <CardBody>
           <Form id="filterForm" onSubmit={handleSubmit}>
             <div className="w-full flex flex-col gap-4">
-              <div className={`grid grid-cols-3 gap-4`}>
+              <div className={`grid lg:grid-cols-3 gap-4`}>
                 <AppTextInput
                   isRequired
                   key='firstName'
@@ -77,12 +78,12 @@ export default function BlogPage() {
                 />
               </div>
 
-              <div className="flex justify-end gap-2">
+              <div className={actionButtons()}>
                 <Button
                   type="button"
                   color="primary"
                   variant="flat"
-                  className="max-w-[120px]"
+                  className={button()}
                   onPress={router.back}
                 >
                   Back
@@ -90,7 +91,7 @@ export default function BlogPage() {
                 <Button
                   type="submit"
                   color="primary"
-                  className="max-w-[120px]"
+                  className={button()}
                   startContent={<Save size={15} />}
                 >
                   Save
