@@ -61,6 +61,7 @@ const usersSlice = createSlice({
       state.success = false;
       state.error = '';
     },
+    clearUsers: () => initialState,
     // setPagination: (
     //   state,
     //   action: PayloadAction<TablePaging>
@@ -72,5 +73,5 @@ const usersSlice = createSlice({
   },
 });
 
-export const { setLoading, setUsers, successUsers, errorUsers, resetUsers } = usersSlice.actions;
+export const { setLoading, setUsers, successUsers, errorUsers, resetUsers, clearUsers } = usersSlice.actions;
 export default usersSlice.reducer;

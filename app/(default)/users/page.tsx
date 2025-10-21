@@ -13,6 +13,7 @@ import { AppDispatch, RootState } from "@/redux/store";
 import { fetchUsers } from "@/redux/api/users-api";
 import { useLoading } from "@/hooks/useLoading";
 import RenderCell from "./render-cell";
+import { clearUsers } from "@/redux/slices/users-slice";
 
 export default function UsersPage() {
   const router = useRouter();
@@ -50,7 +51,11 @@ export default function UsersPage() {
 
   useEffect(() => {
     dispatch(fetchUsers({ ...store.params, ...store.paging }));
-  }, []);
+
+    return () => {
+      dispatch(clearUsers());
+    };
+  }, [dispatch]);
 
   return (
     <div>
