@@ -59,3 +59,11 @@ export const actionButtons = tv({
 export const button = tv({
   base: "sm:max-w-[120px] max-sm:w-full"
 })
+
+export const form = tv({
+  base: "w-full flex flex-col gap-4"
+})
+
+export const inputContainer = tv({
+  base: "grid lg:grid-cols-3 gap-4"
+})

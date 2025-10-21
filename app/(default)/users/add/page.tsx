@@ -11,9 +11,9 @@ import AppTextarea from "@/components/pages/app-textarea";
 import { showErrorToast, showSuccessToast } from "@/utils/common";
 import { useConfirmation } from "@/context/confirmation-context";
 import { RootState } from "@/redux/store";
-import { actionButtons, button } from "@/utils/primitives";
+import { actionButtons, button, form, inputContainer } from "@/utils/primitives";
 
-export default function BlogPage() {
+export default function AddUsersPage() {
   const router = useRouter();
   const store = useSelector((state: RootState) => state.users);
   const { confirm } = useConfirmation();
@@ -45,8 +45,8 @@ export default function BlogPage() {
       <Card className="px-1">
         <CardBody>
           <Form id="filterForm" onSubmit={handleSubmit}>
-            <div className="w-full flex flex-col gap-4">
-              <div className={`grid lg:grid-cols-3 gap-4`}>
+            <div className={form()}>
+              <div className={inputContainer()}>
                 <AppTextInput
                   isRequired
                   key='firstName'
