@@ -13,15 +13,23 @@ import {
   useDisclosure,
   Button,
   DrawerContent,
-  DrawerBody
+  DrawerBody,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  Listbox,
+  ListboxItem
 } from "@heroui/react";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { usePathname, useRouter } from "next/navigation";
-import { EllipsisVertical, Menu } from "lucide-react";
+import { EllipsisVertical, LogOut, Menu, User } from "lucide-react";
 import { breadcrumbsItems } from "../config/breadcrumbs";
 import { useBreadcrumbs, Breadcrumb } from "@/context/breadcrumbs-context";
 import { MobileView, isMobile } from "react-device-detect";
 import SidebarContent from "./sidebar/sidebar-content";
+import { useConfirmation } from "@/context/confirmation-context";
+import { showSuccessToast } from "@/utils/common";
+import { ManagedPopover } from "./common/managed-popover";
 
 const getBasePath = (path: string) => {
   // Remove query/hash
@@ -66,6 +74,7 @@ export const Navbar = () => {
   const pathname = usePathname();
   const { breadcrumbs, setBreadcrumbs } = useBreadcrumbs();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { confirm } = useConfirmation();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
@@ -124,7 +133,42 @@ export const Navbar = () => {
               <p className="text-sm font-medium ml-2">John Doe</p>
               <p className="text-xs text-default-500 ml-2">Admin</p>
             </div>
-            <EllipsisVertical size={20} />
+            <ManagedPopover
+              key="user-actions-popover"
+              trigger={
+                <Button
+                  variant="light"
+                  size="sm"
+                  isIconOnly
+                >
+                  <EllipsisVertical size={20} />
+                </Button>
+              }
+            >
+              <Listbox aria-label="User actions" variant="flat">
+                <ListboxItem
+                  key="profile"
+                  startContent={<User size={13} />}
+                  onPress={() => {
+                  }}
+                >
+                  Profile
+                </ListboxItem>
+                <ListboxItem
+                  key="logout"
+                  className="text-danger"
+                  color="danger"
+                  startContent={<LogOut size={13} />}
+                  onPress={() => {
+                    confirm("Are you sure you want to logout?", () => {
+                      showSuccessToast("You have been loged out!");
+                    });
+                  }}
+                >
+                  Logout
+                </ListboxItem>
+              </Listbox>
+            </ManagedPopover>
           </NavbarItem>
         </NavbarContent>
       </HeroNavbar>
@@ -150,7 +194,7 @@ export const Navbar = () => {
           <DrawerContent>
             {(onClose) => (
               <DrawerBody>
-                <SidebarContent open={true} setOpen={() => { }} onClose={onClose}/>
+                <SidebarContent open={true} setOpen={() => { }} onClose={onClose} />
               </DrawerBody>
             )}
           </DrawerContent>

@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import AppTextInput from "@/components/pages/app-text-input";
-import AppTextarea from "@/components/pages/app-textarea";
+import AppTextInput from "@/components/common/app-text-input";
+import AppTextarea from "@/components/common/app-textarea";
 import { showErrorToast, showSuccessToast } from "@/utils/common";
 import { useConfirmation } from "@/context/confirmation-context";
 import { RootState } from "@/redux/store";
