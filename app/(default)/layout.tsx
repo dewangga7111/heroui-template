@@ -10,6 +10,7 @@ import Sidebar from "@/components/sidebar/sidebar";
 import Footer from "@/components/footer";
 import Loading from "./loading";
 import Mounted from "./mounted";
+import { mainContainer } from "@/utils/primitives";
 
 export const metadata: Metadata = {
   title: {
@@ -39,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <div className="flex min-h-screen w-full bg-gradient-to-b from-stone-50 via-stone-100 to-stone-50 dark:bg-black dark:bg-none">
+          <div className={mainContainer()}>
             <Sidebar />
             <div className="flex flex-col flex-1">
               <div className="sticky top-0 z-50 mx-3">

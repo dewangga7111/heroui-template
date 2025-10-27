@@ -44,7 +44,7 @@ export default function AddUsersPage() {
     <div>
       <Card className="px-1">
         <CardBody>
-          <Form id="filterForm" onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit}>
             <div className={form()}>
               <div className={inputContainer()}>
                 <AppTextInput

@@ -134,7 +134,6 @@ export const Navbar = () => {
               <p className="text-xs text-default-500 ml-2">Admin</p>
             </div>
             <ManagedPopover
-              key="user-actions-popover"
               trigger={
                 <Button
                   variant="light"
