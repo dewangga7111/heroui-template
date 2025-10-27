@@ -4,15 +4,13 @@ import AppTextInput from "@/components/common/app-text-input";
 import { Button, Card, CardBody, Form, Image } from "@heroui/react";
 import { form, title } from "@/utils/primitives";
 import { useEffect, useState } from "react";
-import { Eye, EyeOff, LogIn } from "lucide-react";
+import { LogIn } from "lucide-react";
 import Footer from "@/components/footer";
 import logo from "@/assets/images/logo.png"
+import AppTextInputPassword from "@/components/common/app-text-input-password";
 
 export default function BlogPage() {
   const [mounted, setMounted] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-
-  const toggleVisibility = () => setIsVisible(!isVisible);
 
   useEffect(() => setMounted(true), []);
 
@@ -42,26 +40,11 @@ export default function BlogPage() {
                   label='Email'
                   type="email"
                 />
-                <AppTextInput
+                <AppTextInputPassword
                   isRequired
                   key='password'
                   name='password'
                   label='Password'
-                  type={isVisible ? "text" : "password"}
-                  endContent={
-                    <button
-                      aria-label="toggle password visibility"
-                      className="focus:outline-solid outline-transparent"
-                      type="button"
-                      onClick={toggleVisibility}
-                    >
-                      {isVisible ? (
-                        <EyeOff className="text-2xl text-default-400 pointer-events-none" />
-                      ) : (
-                        <Eye className="text-2xl text-default-400 pointer-events-none" />
-                      )}
-                    </button>
-                  }
                 />
                 <Button
                   type="submit"

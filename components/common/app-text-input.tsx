@@ -1,9 +1,5 @@
-import { Input, extendVariants } from "@heroui/react";
+import { Input, InputProps } from "@heroui/react";
 
-const AppTextInput = extendVariants(Input, {
-  defaultVariants: {
-    labelPlacement: "outside-top",
-  },
-});
-
-export default AppTextInput;
+export default function AppTextInput(props: InputProps) {
+  return <Input {...props} labelPlacement="outside-top" />;
+}
