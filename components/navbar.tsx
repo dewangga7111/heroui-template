@@ -23,13 +23,15 @@ import {
 import { ThemeSwitch } from "@/components/theme-switch";
 import { usePathname, useRouter } from "next/navigation";
 import { EllipsisVertical, LogOut, Menu, User } from "lucide-react";
+import { MobileView, isMobile } from "react-device-detect";
+
 import { breadcrumbsItems } from "../config/breadcrumbs";
 import { useBreadcrumbs, Breadcrumb } from "@/context/breadcrumbs-context";
-import { MobileView, isMobile } from "react-device-detect";
 import SidebarContent from "./sidebar/sidebar-content";
 import { useConfirmation } from "@/context/confirmation-context";
 import { showSuccessToast } from "@/utils/common";
 import { ManagedPopover } from "./common/managed-popover";
+import constants from "@/utils/constants"
 
 const getBasePath = (path: string) => {
   // Remove query/hash
@@ -161,6 +163,7 @@ export const Navbar = () => {
                   onPress={() => {
                     confirm("Are you sure you want to logout?", () => {
                       showSuccessToast("You have been loged out!");
+                      router.push(constants.path.LOGIN)
                     });
                   }}
                 >

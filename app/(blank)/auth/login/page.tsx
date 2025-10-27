@@ -1,18 +1,28 @@
 "use client";
 
-import AppTextInput from "@/components/common/app-text-input";
-import { Button, Card, CardBody, Form, Image } from "@heroui/react";
-import { form, title } from "@/utils/primitives";
 import { useEffect, useState } from "react";
 import { LogIn } from "lucide-react";
+import { useRouter } from "next/navigation";
+
+import AppTextInput from "@/components/common/app-text-input";
+import { Button, Card, CardBody, Form, Image } from "@heroui/react";
 import Footer from "@/components/footer";
 import logo from "@/assets/images/logo.png"
 import AppTextInputPassword from "@/components/common/app-text-input-password";
+import { showSuccessToast } from "@/utils/common";
 
-export default function BlogPage() {
+export default function LoginPage() {
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(e.currentTarget));
+    showSuccessToast('Login successfully')
+    router.push("/")
+  };
 
   if (!mounted) return null;
 
@@ -32,7 +42,7 @@ export default function BlogPage() {
                 <span className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-b from-primary to-primary-300">Welcome Back</span>
                 <span className="text-sm text-default-600 mt-3">Enter your email and password to access your account</span>
               </div>
-              <Form onSubmit={() => { }}>
+              <Form onSubmit={handleSubmit}>
                 <AppTextInput
                   isRequired
                   key='email'

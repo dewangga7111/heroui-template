@@ -4,7 +4,8 @@ const moduleConfig = {
   },
   path: {
     USERS: "/users",
-    UNAUTHORIZED: "/misc/403"
+    UNAUTHORIZED: "/misc/403",
+    LOGIN: "/auth/login",
   },
 };
 
