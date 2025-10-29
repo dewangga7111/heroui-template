@@ -1,13 +1,11 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
-import { Suspense } from "react";
 
 import { Providers } from "./providers";
 import { fontSans } from "@/config/fonts";
-import Loading from "./loading";
-import Mounted from "./mounted";
 import { mainContainer } from "@/utils/primitives";
+import { MainLayout } from "./main-layout";
 
 export const metadata: Metadata = {
   title: {
@@ -38,13 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className={mainContainer()}>
-            <div className="flex flex-col flex-1">
-              <main className="flex-grow px-3 py-3 overflow-y-auto">
-                <Mounted>
-                  <Suspense fallback={<Loading />}>{children}</Suspense>
-                </Mounted>
-              </main>
-            </div>
+            <MainLayout>{children}</MainLayout>
           </div>
         </Providers>
       </body>
