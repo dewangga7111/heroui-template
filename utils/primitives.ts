@@ -67,7 +67,3 @@ export const form = tv({
 export const inputContainer = tv({
   base: "grid lg:grid-cols-3 gap-4"
 })
-
-export const mainContainer = tv({
-  base: "flex min-h-screen w-full bg-gradient-to-b from-stone-50 via-primary-100 to-stone-50 dark:bg-black dark:bg-none"
-})

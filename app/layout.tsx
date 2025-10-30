@@ -4,7 +4,6 @@ import clsx from "clsx";
 
 import { Providers } from "./providers";
 import { fontSans } from "@/config/fonts";
-import { mainContainer } from "@/utils/primitives";
 import { MainLayout } from "./main-layout";
 
 export const metadata: Metadata = {
@@ -35,7 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <div className={mainContainer()}>
+          <div className="flex min-h-screen w-full bg-gradient-to-b from-stone-50 via-primary-100 to-stone-50 dark:bg-black dark:bg-none">
             <MainLayout>{children}</MainLayout>
           </div>
         </Providers>
