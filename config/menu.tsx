@@ -17,30 +17,14 @@ export const menus: MenuItem[] = [
     path: "/",
   },
   {
-    key: "USERS_PAGE",
-    label: "Users",
-    icon: <Users size={18} />,
-    path: "/users",
-  },
-  {
     key: "settings",
     label: "Settings",
     icon: <Settings size={18} />,
     children: [
       {
-        key: "BLOG_PAGE",
-        label: "Blog",
-        path: "/blog",
-      },
-      {
-        key: "security",
-        label: "Security",
-        path: "/settings/security",
-      },
-      {
-        key: "notifications",
-        label: "Notifications",
-        path: "/settings/notifications",
+        key: "USERS_PAGE",
+        label: "Users",
+        path: "/users",
       },
     ],
   },

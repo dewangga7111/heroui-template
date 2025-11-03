@@ -6,6 +6,7 @@ import {
   setUsers,
   errorUsers,
   resetUsers,
+  successUsers,
 } from "@/redux/slices/users-slice";
 import { User } from "@/types/user";
 import { TableFilter } from "@/types/table";
@@ -44,7 +45,12 @@ export const createUser =
   (user: Omit<User, "id">) => async (dispatch: AppDispatch) => {
     try {
       dispatch(setLoading(true));
-      await apiClient.post("/users", user);
+      const response = await apiClient.post("/users", user);
+      if (response.status == 200) {
+        dispatch(successUsers());
+      } else {
+        dispatch(errorUsers(response.data?.message || response.statusText));
+      }
     } catch (error: any) {
       dispatch(errorUsers(error.response?.data?.message || error.message));
     } finally {
@@ -56,7 +62,12 @@ export const updateUser =
   (id: number, user: Partial<User>) => async (dispatch: AppDispatch) => {
     try {
       dispatch(setLoading(true));
-      await apiClient.put(`/users/${id}`, user);
+      const response = await apiClient.put(`/users/${id}`, user);
+      if (response.status == 200) {
+        dispatch(successUsers());
+      } else {
+        dispatch(errorUsers(response.data?.message || response.statusText));
+      }
     } catch (error: any) {
       dispatch(errorUsers(error.response?.data?.message || error.message));
     } finally {
@@ -68,7 +79,12 @@ export const deleteUser =
   (id: number) => async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
       dispatch(setLoading(true));
-      await apiClient.delete(`/users/${id}`);
+      const response = await apiClient.delete(`/users/${id}`);
+      if (response.status == 200) {
+        dispatch(successUsers());
+      } else {
+        dispatch(errorUsers(response.data?.message || response.statusText));
+      }
 
       const state = getState();
       const lastParams = (state.users as any)?.params || {};

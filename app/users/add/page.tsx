@@ -21,7 +21,7 @@ export default function AddUsersPage() {
 
   useEffect(() => {
     if (store.success) {
-      showSuccessToast('Data saved successfully')
+      showSuccessToast(constants.toast.SUCCESS_SAVE)
       router.push(constants.path.USERS)
     } else if (store.error) {
       showErrorToast(store.error)
@@ -31,13 +31,16 @@ export default function AddUsersPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.currentTarget));
-    confirm("Are you sure want to save this data?", () => {
-      doSave(data)
+    confirm({
+      message: constants.confirmation.SAVE,
+      onConfirm: () => {
+        doSave(data)
+      },
     });
   };
 
   const doSave = (data: any) => {
-    showSuccessToast("Data saved successfully!");
+    showSuccessToast(constants.toast.SUCCESS_SAVE);
     router.push(constants.path.USERS);
   }
 

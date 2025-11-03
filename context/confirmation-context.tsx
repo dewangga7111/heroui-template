@@ -3,8 +3,16 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@heroui/react";
 
+type ConfirmParams = {
+  message: string;
+  onConfirm: () => void;
+  header?: string;
+  cancelText?: string;
+  confirmText?: string;
+};
+
 type ConfirmationContextType = {
-  confirm: (message: string, onConfirm: () => void) => void;
+  confirm: (params: ConfirmParams) => void;
 };
 
 const ConfirmationContext = createContext<ConfirmationContextType | undefined>(undefined);
@@ -13,12 +21,24 @@ export const ConfirmationProvider = ({ children }: { children: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [onConfirmAction, setOnConfirmAction] = useState<(() => void) | null>(null);
+  const [header, setHeader] = useState("Confirmation");
+  const [cancelText, setCancelText] = useState("No");
+  const [confirmText, setConfirmText] = useState("Yes");
 
-  const confirm = (msg: string, onConfirm: () => void) => {
+  const confirm = ({
+    message,
+    onConfirm,
+    header = "Confirmation",
+    cancelText = "No",
+    confirmText = "Yes",
+  }: ConfirmParams) => {
     //close all active popovers
     window.dispatchEvent(new Event("close-all-popovers"));
-    setMessage(msg);
+    setMessage(message);
     setOnConfirmAction(() => onConfirm);
+    setHeader(header);
+    setCancelText(cancelText);
+    setConfirmText(confirmText);
     setIsOpen(true);
   };
 
@@ -46,17 +66,17 @@ export const ConfirmationProvider = ({ children }: { children: ReactNode }) => {
       >
         <ModalContent>
           <ModalHeader className="justify-center text-center text-lg font-semibold">
-            Confirmation
+            {header}
           </ModalHeader>
           <ModalBody className="text-center">
             <p className="text-default-600">{message}</p>
           </ModalBody>
           <ModalFooter className="flex justify-center gap-4">
             <Button variant="flat" color="primary" onPress={handleCancel}>
-              No
+              {cancelText}
             </Button>
             <Button color="primary" onPress={handleConfirm}>
-              Yes
+              {confirmText}
             </Button>
           </ModalFooter>
         </ModalContent>

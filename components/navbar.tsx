@@ -161,9 +161,12 @@ export const Navbar = () => {
                   color="danger"
                   startContent={<LogOut size={13} />}
                   onPress={() => {
-                    confirm("Are you sure you want to logout?", () => {
-                      showSuccessToast("You have been loged out!");
-                      router.push(constants.path.LOGIN)
+                    confirm({
+                      message: constants.confirmation.LOGOUT,
+                      onConfirm: () => {
+                        showSuccessToast(constants.toast.SUCCESS_LOGOUT);
+                        router.push(constants.path.LOGIN)
+                      },
                     });
                   }}
                 >

@@ -9,7 +9,7 @@ import { title, subtitle } from "@/utils/primitives";
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Dashboard - ' + process.env.NEXT_WEB_TITLE,
+  title: 'Dashboard - ' + process.env.NEXT_PUBLIC_WEB_TITLE,
 };
 
 export default function Home() {

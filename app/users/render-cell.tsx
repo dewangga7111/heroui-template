@@ -55,8 +55,11 @@ export default function UsersRenderCell({ item, columnKey }: RenderCellProps) {
               color="danger"
               startContent={<Trash2 size={13}/>}
               onPress={() => {
-                confirm("Are you sure you want to delete this item?", () => {
-                  showSuccessToast("Item deleted!");
+                confirm({
+                  message: constants.confirmation.DELETE,
+                  onConfirm: () => {
+                    showSuccessToast(constants.toast.SUCCESS_DELETE);
+                  },
                 });
               }}
             >

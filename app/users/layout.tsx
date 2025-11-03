@@ -3,7 +3,7 @@ import { RouteGuardProvider } from "@/context/route-guard-context";
 import constants from "@/utils/constants"
 
 export const metadata: Metadata = {
-  title: 'Users - ' + process.env.NEXT_WEB_TITLE,
+  title: 'Users - ' + process.env.NEXT_PUBLIC_WEB_TITLE,
 };
 
 export default function UsersLayout({ children }: { children: React.ReactNode }) {

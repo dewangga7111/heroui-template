@@ -62,14 +62,6 @@ const usersSlice = createSlice({
       state.error = '';
     },
     clearUsers: () => initialState,
-    // setPagination: (
-    //   state,
-    //   action: PayloadAction<TablePaging>
-    // ) => {
-    //   if (action.payload.page !== undefined) state.paging.page = action.payload.page;
-    //   if (action.payload.totalPage !== undefined) state.paging.totalPage = action.payload.totalPage;
-    //   if (action.payload.totalRows !== undefined) state.paging.totalRows = action.payload.totalRows;
-    // },
   },
 });
 

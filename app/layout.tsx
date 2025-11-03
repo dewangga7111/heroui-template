@@ -8,7 +8,7 @@ import { MainLayout } from "./main-layout";
 
 export const metadata: Metadata = {
   title: {
-    default: `${process.env.NEXT_WEB_TITLE}`,
+    default: `${process.env.NEXT_PUBLIC_WEB_TITLE}`,
     template: `%s`,
   },
   icons: {

@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 export const metadata: Metadata = {
-  title: 'Access Denied - ' + process.env.NEXT_WEB_TITLE,
+  title: 'Access Denied - ' + process.env.NEXT_PUBLIC_WEB_TITLE,
 };
 
 export default function ForbiddenLayout({
