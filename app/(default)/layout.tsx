@@ -1,21 +1,13 @@
 "use client";
 
-import type { ThemeProviderProps } from "next-themes";
 import * as React from "react";
-import { usePathname, useRouter } from "next/navigation";
 import Sidebar from "@/components/sidebar/sidebar";
 import { Navbar } from "@/components/navbar";
 import { Suspense, useEffect, useState } from "react";
-import Loading from "./loading";
+import Loading from "../loading";
 import Footer from "@/components/footer";
 
-export function MainLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-
-  const blankLayoutPaths = ["/auth", "/misc"];
-
-  const isBlank = blankLayoutPaths.some((path) => pathname.includes(path));
-
+export default function MainLayout({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -24,14 +16,6 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
 
   if (!mounted) {
     return <Loading />;
-  }
-
-  if (isBlank) {
-    return <div className="flex flex-col flex-1">
-      <main className="flex-grow px-3 py-3 overflow-y-auto">
-        {children}
-      </main>
-    </div>
   }
 
   return (
