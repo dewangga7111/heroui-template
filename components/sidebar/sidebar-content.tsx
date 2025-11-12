@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button, Tooltip, ScrollShadow } from "@heroui/react";
+import { Button, Tooltip, ScrollShadow, Image } from "@heroui/react";
 import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { isMobile } from "react-device-detect";
+import logo from "@/assets/images/logo.png"
 
 import SidebarMenuItem from "./sidebar-item";
 import { menus } from "@/config/menu";
@@ -25,6 +26,7 @@ export default function SidebarContent({ open, setOpen, onClose }: SidebarConten
   const pathname = usePathname();
   const { theme } = useTheme();
   const { hasPermission } = usePermission();
+  const appName = process.env.NEXT_PUBLIC_WEB_TITLE || "MyApp";
 
   useEffect(() => setMounted(true), []);
 
@@ -56,7 +58,7 @@ export default function SidebarContent({ open, setOpen, onClose }: SidebarConten
       {/* Header */}
       {isMobile ? (
         <div className="flex items-center justify-center p-3">
-          {open && <span className="font-bold">MyApp</span>}
+          {open && <span className="font-bold">{appName}</span>}
         </div>
       ) : (
         <div className="flex items-center justify-between p-3">
@@ -78,7 +80,7 @@ export default function SidebarContent({ open, setOpen, onClose }: SidebarConten
               <Menu size={20} />
             </Button>
           </Tooltip>
-          {open && <span className="font-bold">MyApp</span>}
+          {open && <span className="font-bold"><Image src={logo.src} alt="Logo" height={50} /></span>}
         </div>
       )}
 

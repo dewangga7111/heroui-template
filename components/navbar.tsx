@@ -110,7 +110,7 @@ export const Navbar = () => {
         ) : (
           <NavbarBrand>
             {breadcrumbs.length > 0 && (
-              <Breadcrumbs size="lg">
+              <Breadcrumbs size="md">
                 {breadcrumbs.map((crumb, idx) => (
                   <BreadcrumbItem key={idx} onPress={() => router.push(crumb.path as string)} isDisabled={!crumb.path} className="font-semibold">
                     {crumb.label}
