@@ -120,7 +120,7 @@ export default function EditPermissionPage() {
                 </TableBody>
               </Table>
 
-              <div className={actionButtons()}>
+              <div className={`${actionButtons()} mt-3`}>
                 <Button
                   type="button"
                   color="primary"
