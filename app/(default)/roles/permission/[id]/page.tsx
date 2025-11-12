@@ -81,10 +81,10 @@ export default function EditPermissionPage() {
               <Table removeWrapper aria-label="Permissions table">
                 <TableHeader>
                   <TableColumn>Menu</TableColumn>
-                  <TableColumn width={150}>Read</TableColumn>
-                  <TableColumn width={150}>Add</TableColumn>
-                  <TableColumn width={150}>Edit</TableColumn>
-                  <TableColumn width={150}>Delete</TableColumn>
+                  <TableColumn width={150} align="center">Read</TableColumn>
+                  <TableColumn width={150} align="center">Add</TableColumn>
+                  <TableColumn width={150} align="center">Edit</TableColumn>
+                  <TableColumn width={150} align="center">Delete</TableColumn>
                 </TableHeader>
 
                 <TableBody>
