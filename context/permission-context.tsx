@@ -1,16 +1,22 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
+import { permissionList, Permission } from "@/dummy/permission";
+import constants from "@/utils/constants";
 
 type PermissionContextType = {
-  permissions: string[];
-  hasPermission: (pageId: string) => boolean;
+  permissions: Permission[];
+  canRead: (pageId: string) => boolean;
+  canCreate: (pageId: string) => boolean;
+  canUpdate: (pageId: string) => boolean;
+  canDelete: (pageId: string) => boolean;
+  hasPermission: (pageId: string, action: string) => boolean;
 };
 
 const PermissionContext = createContext<PermissionContextType | undefined>(undefined);
 
 // context ini untuk menyediakan permission untuk kebutuhan penjagaan
 export const PermissionProvider = ({ children }: { children: React.ReactNode }) => {
-  const [permissions, setPermissions] = useState<string[]>([]);
+  const [permissions, setPermissions] = useState<Permission[]>([]);
 
   // Load permissions once
   useEffect(() => {
@@ -19,19 +25,30 @@ export const PermissionProvider = ({ children }: { children: React.ReactNode }) 
       setPermissions(JSON.parse(stored));
     } else {
       // default simulated permissions
-      setPermissions([
-        "HOME_PAGE",
-        "USERS_PAGE",
-        "BLOG_PAGE",
-        // "SETTINGS_PAGE"
-      ]);
+      setPermissions(permissionList);
     }
   }, []);
 
-  const hasPermission = (perm: string) => permissions.includes(perm);
+  const hasPermission = (pageId: string, action: string) => {
+    const perm = permissions.find(p => p.function_id === pageId);
+    if (!perm) return false;
+    return (perm as any)[action] === 'Y';
+  };
+
+  const canRead = (pageId: string) => hasPermission(pageId, constants.permission.READ);
+  const canCreate = (pageId: string) => hasPermission(pageId, constants.permission.CREATE);
+  const canUpdate = (pageId: string) => hasPermission(pageId, constants.permission.UPDATE);
+  const canDelete = (pageId: string) => hasPermission(pageId, constants.permission.DELETE);
 
   return (
-    <PermissionContext.Provider value={{ permissions, hasPermission }}>
+    <PermissionContext.Provider value={{ 
+      permissions, 
+      hasPermission,
+      canRead,
+      canCreate, 
+      canUpdate,
+      canDelete
+    }}>
       {children}
     </PermissionContext.Provider>
   );

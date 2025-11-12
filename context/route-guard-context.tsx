@@ -1,7 +1,7 @@
 "use client";
 
 import constants from "@/utils/constants"
-import { usePermission } from "@/context/permission-context"; // ✅ imported global one
+import { usePermission } from "@/context/permission-context";
 
 import { createContext, useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -9,25 +9,28 @@ import { useRouter } from "next/navigation";
 // This context is just a placeholder (no values exposed)
 const RouteGuardContext = createContext<boolean | undefined>(undefined);
 
-// context ini untuk menjaga routing bedasarkan permission
 export const RouteGuardProvider = ({
   children,
   pageId,
+  access,
 }: {
   children: React.ReactNode;
   pageId: string;
+  access: string;
 }) => {
   const router = useRouter();
-  const { permissions } = usePermission(); // ✅ read from global context
+  const { hasPermission } = usePermission();
 
   useEffect(() => {
-    if (!pageId || permissions.length === 0) return;
+    if (!pageId) return;
+    
+    const hasAccess = hasPermission(pageId, access);
 
-    if (!permissions.includes(pageId)) {
-      console.warn(`🚫 No permission for: ${pageId}`);
+    if (!hasAccess) {
+      console.warn(`🚫 No ${access} permission for: ${pageId}`);
       router.push(constants.path.UNAUTHORIZED);
     }
-  }, [pageId, permissions, router]);
+  }, [pageId, access, hasPermission, router]);
 
   return (
     <RouteGuardContext.Provider value={true}>

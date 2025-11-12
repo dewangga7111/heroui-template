@@ -10,39 +10,25 @@ import constants from "@/utils/constants";
 import { TableColumnType, TableRowType } from "@/types/table";
 import { FilterField } from "@/types/filter";
 import { AppDispatch, RootState } from "@/redux/store";
-import { fetchUsers } from "@/redux/api/users-api";
+import { fetchRoles } from "@/redux/api/roles-api";
 import { useLoading } from "@/hooks/useLoading";
 import RenderCell from "./render-cell";
-import { clearUsers } from "@/redux/slices/users-slice";
+import { clearRoles } from "@/redux/slices/roles-slice";
 
-export default function UsersPage() {
+export default function RolesPage() {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
-  const store = useSelector((state: RootState) => state.users);
-  const isLoading = useLoading("users");
+  const store = useSelector((state: RootState) => state.roles);
+  const isLoading = useLoading("roles");
 
   const fields: FilterField[] = [
-    { type: "input", key: "name", label: "Name" },
-    {
-      type: "autocomplete",
-      key: "role",
-      label: "Role",
-      placeholder: "Select role",
-      options: (store.data ?? []).map((opt) => ({
-        label: opt.name,
-        value: opt.name,
-      })),
-    },
-    { type: "datepicker", key: "joinedAt", label: "Joined Date" },
-    { type: "daterange", key: "activeRange", label: "Active Range" },
+    { type: "input", key: "role_name", label: "Name" },
   ];
 
   const columns: TableColumnType[] = [
     { key: "action", label: "Action", width: 50, align: "center" },
-    { key: "firstName", label: "Name", width: 200 },
-    { key: "username", label: "Username" },
-    { key: "email", label: "Email" },
-    { key: "phone", label: "Phone" },
+    { key: "role_name", label: "Name", width: 200 },
+    { key: "description", label: "Description" },
   ];
 
   const renderCell = (item: TableRowType, columnKey: React.Key) => (
@@ -50,10 +36,10 @@ export default function UsersPage() {
   );
 
   useEffect(() => {
-    dispatch(fetchUsers({ ...store.params, ...store.paging }));
+    dispatch(fetchRoles({ ...store.params, ...store.paging }));
 
     return () => {
-      dispatch(clearUsers());
+      dispatch(clearRoles());
     };
   }, [dispatch]);
 
@@ -62,10 +48,10 @@ export default function UsersPage() {
       <Filter
         fields={fields}
         onFilter={(data) => {
-          dispatch(fetchUsers({ ...data, ...store.paging, page: 1 }));
+          dispatch(fetchRoles({ ...data, ...store.paging, page: 1 }));
         }}
         onClear={() => {
-          dispatch(fetchUsers({ ...store.paging, page: 1 }));
+          dispatch(fetchRoles({ ...store.paging, page: 1 }));
         }}
       />
       <Datatable
@@ -77,9 +63,9 @@ export default function UsersPage() {
         totalPage={store.paging.totalPage!}
         totalRows={store.paging.totalRows!}
         onPageChange={(page: number) => {
-          dispatch(fetchUsers({ ...store.params, ...store.paging, page }));
+          dispatch(fetchRoles({ ...store.params, ...store.paging, page }));
         }}
-        doAdd={() => router.push(`${constants.path.USERS}/add`)}
+        doAdd={() => router.push(`${constants.path.ROLES}/add`)}
       />
     </div>
   );

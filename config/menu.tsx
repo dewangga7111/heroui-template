@@ -26,6 +26,11 @@ export const menus: MenuItem[] = [
         label: "Users",
         path: "/users",
       },
+      {
+        key: "ROLES_PAGE",
+        label: "Roles",
+        path: "/roles",
+      },
     ],
   },
   {

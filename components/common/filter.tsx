@@ -32,8 +32,8 @@ export default function DynamicFilter({
   const [formValues, setFormValues] = useState<Record<string, any>>({});
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleChange = (name: string, value: any) => {
-    setFormValues((prev) => ({ ...prev, [name]: value }));
+  const handleChange = (key: string, value: any) => {
+    setFormValues((prev) => ({ ...prev, [key]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -51,7 +51,7 @@ export default function DynamicFilter({
   const handleClear = () => {
     const clearedValues: Record<string, any> = {};
     fields.forEach((f) => {
-      clearedValues[f.name] = null;
+      clearedValues[f.key] = null;
     });
     setFormValues(clearedValues);
     onClear();
@@ -61,10 +61,10 @@ export default function DynamicFilter({
     <Card className="px-1 mb-3 overflow-hidden">
       {/* Header with toggle */}
       <CardHeader
-        className="flex justify-between items-center cursor-pointer select-none"
+        className="flex justify-between items-center cursor-pointer select-none h-[45px]"
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        <span className="font-semibold">Filter</span>
+        <span className="font-semibold text-md">Filter</span>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.25, ease: "easeInOut" }}
@@ -88,49 +88,49 @@ export default function DynamicFilter({
                 <div className="w-full flex flex-col gap-4">
                   <div className={`grid sm:grid-cols-3 gap-4`}>
                     {fields.map((field) => {
-                      const value = formValues[field.name];
+                      const value = formValues[field.key];
 
                       switch (field.type) {
                         case "input":
                           return (
                             <AppTextInput
-                              key={field.name}
+                              key={field.key}
                               label={field.label}
                               placeholder={field.placeholder}
                               value={value || ""}
-                              onChange={(e) => handleChange(field.name, e.target.value)}
+                              onChange={(e) => handleChange(field.key, e.target.value)}
                             />
                           );
 
                         case "autocomplete":
                           return (
                             <AppAutocomplete
-                              key={field.name}
+                              key={field.key}
                               label={field.label}
                               placeholder={field.placeholder}
                               selectedKey={value || ""}
                               items={field.options ?? []}
-                              onSelectionChange={(v) => handleChange(field.name, v)}
+                              onSelectionChange={(v) => handleChange(field.key, v)}
                             />
                           );
 
                         case "datepicker":
                           return (
                             <AppDatePicker
-                              key={field.name}
+                              key={field.key}
                               label={field.label}
                               value={value ?? null}
-                              onChange={(v: any) => handleChange(field.name, v)}
+                              onChange={(v: any) => handleChange(field.key, v)}
                             />
                           );
 
                         case "daterange":
                           return (
                             <AppDateRangePicker
-                              key={field.name}
+                              key={field.key}
                               label={field.label}
                               value={value ?? null}
-                              onChange={(v) => handleChange(field.name, v)}
+                              onChange={(v) => handleChange(field.key, v)}
                             />
                           );
 

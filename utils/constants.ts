@@ -1,9 +1,11 @@
 const moduleConfig = {
   menu: {
     MENU_ID_USER: "USERS_PAGE",
+    MENU_ID_ROLE: "ROLES_PAGE",
   },
   path: {
     USERS: "/users",
+    ROLES: "/roles",
     UNAUTHORIZED: "/misc/403",
     LOGIN: "/auth/login",
   },
@@ -17,6 +19,12 @@ const moduleConfig = {
     SUCCESS_DELETE: "Data Deleted Successfully",
     SUCCESS_SAVE: "Data Saved Successfully",
     SUCCESS_LOGOUT: "You have been loged out!"
+  },
+  permission: {
+    READ: 'read',
+    CREATE: 'create',
+    UPDATE: 'update',
+    DELETE: 'delete'
   }
 };
 

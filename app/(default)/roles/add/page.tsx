@@ -14,15 +14,15 @@ import { RootState } from "@/redux/store";
 import { actionButtons, button, form, inputContainer } from "@/utils/primitives";
 import constants from "@/utils/constants"
 
-export default function AddUsersPage() {
+export default function AddRolesPage() {
   const router = useRouter();
-  const store = useSelector((state: RootState) => state.users);
+  const store = useSelector((state: RootState) => state.roles);
   const { confirm } = useConfirmation();
 
   useEffect(() => {
     if (store.success) {
       showSuccessToast(constants.toast.SUCCESS_SAVE)
-      router.push(constants.path.USERS)
+      router.push(constants.path.ROLES)
     } else if (store.error) {
       showErrorToast(store.error)
     }
@@ -41,7 +41,7 @@ export default function AddUsersPage() {
 
   const doSave = (data: any) => {
     showSuccessToast(constants.toast.SUCCESS_SAVE);
-    router.push(constants.path.USERS);
+    router.push(constants.path.ROLES);
   }
 
   return (
@@ -53,32 +53,15 @@ export default function AddUsersPage() {
               <div className={inputContainer()}>
                 <AppTextInput
                   isRequired
-                  key='firstName'
-                  name='firstName'
-                  label='First Name'
-                />
-                <AppTextInput
-                  isRequired
-                  key='lastName'
-                  name='lastName'
-                  label='Last Name'
-                />
-                <AppTextInput
-                  key='email'
-                  name='email'
-                  label='Email'
-                  type="email"
-                />
-                <AppTextInput
-                  key='phone'
-                  name='phone'
-                  label='Phone'
-                  type="number"
+                  key='role_name'
+                  name='role_name'
+                  label='Name'
                 />
                 <AppTextarea
-                  key='address'
-                  name='address'
-                  label='Address'
+                  isRequired
+                  key='description'
+                  name='description'
+                  label='Description'
                 />
               </div>
 

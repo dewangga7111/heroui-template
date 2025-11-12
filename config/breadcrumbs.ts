@@ -20,10 +20,24 @@ export const breadcrumbsItems = [
           }
         ]
       },
+      {
+        label: "Roles",
+        path: "/roles",
+        children: [
+          {
+            label: "Add Roles",
+            path: "/roles/add",
+          },
+          {
+            label: "Edit Roles",
+            path: "/roles/edit",
+          },
+          {
+            label: "Edit Permission",
+            path: "/roles/permission",
+          }
+        ]
+      },
     ],
-  },
-  {
-    label: "Logout",
-    path: "/logout",
   },
 ];

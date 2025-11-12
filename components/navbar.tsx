@@ -92,6 +92,7 @@ export const Navbar = () => {
     <>
       <HeroNavbar
         maxWidth="full"
+        height="50px"
         className="backdrop-blur-md rounded-bl-lg rounded-br-lg shadow-sm"
         position="sticky"
       >
@@ -129,7 +130,7 @@ export const Navbar = () => {
             <Avatar
               isBordered
               src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
-              size="sm"
+              className="w-7 h-7 text-tiny"
             />
             <div className="mx-2 min-w-[120px]">
               <p className="text-sm font-medium ml-2">John Doe</p>

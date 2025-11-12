@@ -11,6 +11,7 @@ import SidebarMenuItem from "./sidebar-item";
 import { menus } from "@/config/menu";
 import { isMenuActive } from "./utils";
 import { usePermission } from "@/context/permission-context";
+import constants from "@/utils/constants";
 
 interface SidebarContentProps {
   open: boolean;
@@ -42,7 +43,7 @@ export default function SidebarContent({ open, setOpen, onClose }: SidebarConten
   }, [pathname]);
 
   const shouldShowMenu = (item: any): boolean => {
-    if (item.key && hasPermission(item.key)) return true;
+    if (item.key && hasPermission(item.key, constants.permission.READ)) return true;
     if (item.children && item.children.some((child: any) => shouldShowMenu(child)))
       return true;
     return false;

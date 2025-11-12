@@ -16,7 +16,6 @@ export const fetchUsers =
     async (dispatch: AppDispatch) => {
       try {
         dispatch(setLoading(true));
-
         // ✅ Add skip dynamically (without mutating the original param)
         const response = await apiClient.get("/users", {
           params: { ...param, skip: ((param.page || 1) - 1) * (param.limit || 10) }

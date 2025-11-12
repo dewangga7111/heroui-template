@@ -3,12 +3,12 @@ import { RouteGuardProvider } from "@/context/route-guard-context";
 import constants from "@/utils/constants"
 
 export const metadata: Metadata = {
-  title: 'Add Users - ' + process.env.NEXT_PUBLIC_WEB_TITLE,
+  title: 'Add Roles - ' + process.env.NEXT_PUBLIC_WEB_TITLE,
 };
 
-export default function UsersLayout({ children }: { children: React.ReactNode }) {
+export default function RolesLayout({ children }: { children: React.ReactNode }) {
   return (
-    <RouteGuardProvider pageId={constants.menu.MENU_ID_USER} access={constants.permission.CREATE}>
+    <RouteGuardProvider pageId={constants.menu.MENU_ID_ROLE} access={constants.permission.CREATE}>
       {children}
     </RouteGuardProvider>
   );
