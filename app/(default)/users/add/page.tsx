@@ -12,7 +12,6 @@ import { showErrorToast, showSuccessToast } from "@/utils/common";
 import { useConfirmation } from "@/context/confirmation-context";
 import { RootState } from "@/redux/store";
 import { actionButtons, button, form, inputContainer } from "@/utils/primitives";
-import constants from "@/utils/constants"
 
 export default function AddUsersPage() {
   const router = useRouter();
@@ -21,8 +20,8 @@ export default function AddUsersPage() {
 
   useEffect(() => {
     if (store.success) {
-      showSuccessToast(constants.toast.SUCCESS_SAVE)
-      router.push(constants.path.USERS)
+      showSuccessToast("Data Saved Successfully")
+      router.push("/users")
     } else if (store.error) {
       showErrorToast(store.error)
     }
@@ -32,7 +31,7 @@ export default function AddUsersPage() {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.currentTarget));
     confirm({
-      message: constants.confirmation.SAVE,
+      message: "Are you sure you want to save this data?",
       onConfirm: () => {
         doSave(data)
       },
@@ -40,8 +39,8 @@ export default function AddUsersPage() {
   };
 
   const doSave = (data: any) => {
-    showSuccessToast(constants.toast.SUCCESS_SAVE);
-    router.push(constants.path.USERS);
+    showSuccessToast("Data Saved Successfully");
+    router.push("/users");
   }
 
   return (

@@ -1,6 +1,5 @@
 "use client";
 
-import constants from "@/utils/constants"
 import { usePermission } from "@/context/permission-context";
 
 import { createContext, useContext, useEffect } from "react";
@@ -28,7 +27,7 @@ export const RouteGuardProvider = ({
 
     if (!hasAccess) {
       console.warn(`🚫 No ${access} permission for: ${pageId}`);
-      router.push(constants.path.UNAUTHORIZED);
+      router.push("/misc/403");
     }
   }, [pageId, access, hasPermission, router]);
 

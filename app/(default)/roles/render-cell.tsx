@@ -9,7 +9,6 @@ import {
 import { EllipsisVertical, Trash2, Pencil, Lock } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import constants from "@/utils/constants";
 import { RenderCellProps } from "@/types/table";
 import { showSuccessToast } from "@/utils/common";
 import { useConfirmation } from "@/context/confirmation-context";
@@ -41,7 +40,7 @@ export default function RolesRenderCell({ item, columnKey }: RenderCellProps) {
               key="permission"
               startContent={<Lock size={13}/>}
               onPress={() => {
-                router.push(`${constants.path.ROLES}/permission/${item.id}`);
+                router.push(`/roles/permission/${item.id}`);
               }}
             >
               Permission
@@ -50,7 +49,7 @@ export default function RolesRenderCell({ item, columnKey }: RenderCellProps) {
               key="edit"
               startContent={<Pencil size={13}/>}
               onPress={() => {
-                router.push(`${constants.path.ROLES}/edit/${item.id}`);
+                router.push(`/roles/edit/${item.id}`);
               }}
             >
               Edit
@@ -62,9 +61,9 @@ export default function RolesRenderCell({ item, columnKey }: RenderCellProps) {
               startContent={<Trash2 size={13}/>}
               onPress={() => {
                 confirm({
-                  message: constants.confirmation.DELETE,
+                  message: "Are you sure you want to delete this data?",
                   onConfirm: () => {
-                    showSuccessToast(constants.toast.SUCCESS_DELETE);
+                    showSuccessToast("Data Deleted Successfully");
                   },
                 });
               }}

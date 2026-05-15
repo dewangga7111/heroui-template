@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 
 import Datatable from "@/components/common/datatable";
 import Filter from "@/components/common/filter";
-import constants from "@/utils/constants";
 import { TableColumnType, TableRowType } from "@/types/table";
 import { FilterField } from "@/types/filter";
 import { AppDispatch, RootState } from "@/redux/store";
@@ -65,7 +64,7 @@ export default function RolesPage() {
         onPageChange={(page: number) => {
           dispatch(fetchRoles({ ...store.params, ...store.paging, page }));
         }}
-        doAdd={() => router.push(`${constants.path.ROLES}/add`)}
+        doAdd={() => router.push("/roles/add")}
       />
     </div>
   );

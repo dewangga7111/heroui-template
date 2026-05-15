@@ -11,7 +11,6 @@ import logo from "@/assets/images/logo.png"
 import AppTextInputPassword from "@/components/common/app-text-input-password";
 import { showSuccessToast } from "@/utils/common";
 import { isMobile } from "react-device-detect";
-import constants from "@/utils/constants";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -22,7 +21,7 @@ export default function LoginPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.currentTarget));
-    showSuccessToast(constants.toast.SUCCESS_LOGIN)
+    showSuccessToast("Login Successfully")
     router.push("/")
   };
 

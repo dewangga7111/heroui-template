@@ -9,7 +9,6 @@ import {
 import { EllipsisVertical, Trash2, Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import constants from "@/utils/constants";
 import { RenderCellProps } from "@/types/table";
 import { formatEllipsis, showSuccessToast } from "@/utils/common";
 import { useConfirmation } from "@/context/confirmation-context";
@@ -44,7 +43,7 @@ export default function UsersRenderCell({ item, columnKey }: RenderCellProps) {
               key="edit"
               startContent={<Pencil size={13}/>}
               onPress={() => {
-                router.push(`${constants.path.USERS}/edit/${item.id}`);
+                router.push(`/users/edit/${item.id}`);
               }}
             >
               Edit
@@ -56,9 +55,9 @@ export default function UsersRenderCell({ item, columnKey }: RenderCellProps) {
               startContent={<Trash2 size={13}/>}
               onPress={() => {
                 confirm({
-                  message: constants.confirmation.DELETE,
+                  message: "Are you sure you want to delete this data?",
                   onConfirm: () => {
-                    showSuccessToast(constants.toast.SUCCESS_DELETE);
+                    showSuccessToast("Data Deleted Successfully");
                   },
                 });
               }}

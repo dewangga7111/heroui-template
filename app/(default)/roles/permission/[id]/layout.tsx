@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import { RouteGuardProvider } from "@/context/route-guard-context";
-import constants from "@/utils/constants"
 
 export const metadata: Metadata = {
   title: 'Edit Permission - ' + process.env.NEXT_PUBLIC_WEB_TITLE,
@@ -8,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function RolesLayout({ children }: { children: React.ReactNode }) {
   return (
-    <RouteGuardProvider pageId={constants.menu.MENU_ID_ROLE} access={constants.permission.UPDATE}>
+    <RouteGuardProvider pageId="ROLES_PAGE" access="update">
       {children}
     </RouteGuardProvider>
   );

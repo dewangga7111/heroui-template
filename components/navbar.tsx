@@ -31,7 +31,6 @@ import SidebarContent from "./sidebar/sidebar-content";
 import { useConfirmation } from "@/context/confirmation-context";
 import { showSuccessToast } from "@/utils/common";
 import { ManagedPopover } from "./common/managed-popover";
-import constants from "@/utils/constants"
 
 const getBasePath = (path: string) => {
   // Remove query/hash
@@ -163,10 +162,10 @@ export const Navbar = () => {
                   startContent={<LogOut size={13} />}
                   onPress={() => {
                     confirm({
-                      message: constants.confirmation.LOGOUT,
+                      message: "Are you sure you want to logout?",
                       onConfirm: () => {
-                        showSuccessToast(constants.toast.SUCCESS_LOGOUT);
-                        router.push(constants.path.LOGIN)
+                        showSuccessToast("You have been loged out!");
+                        router.push("/auth/login")
                       },
                     });
                   }}
