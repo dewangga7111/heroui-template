@@ -1,11 +1,10 @@
-"use client";
+import { Metadata } from 'next';
+import UsersEditPage from '@/components/pages/users/users-edit-page';
 
-import { title } from "@/utils/primitives";
+export const metadata: Metadata = {
+  title: 'Edit Users - ' + process.env.NEXT_PUBLIC_WEB_TITLE,
+};
 
-export default function BlogPage() {
-  return (
-    <div>
-      <h1 className={title()}>Blog</h1>
-    </div>
-  );
+export default function Page() {
+  return <UsersEditPage />;
 }

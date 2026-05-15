@@ -1,11 +1,10 @@
-"use client";
+import { Metadata } from 'next';
+import RolesEditPage from '@/components/pages/roles/roles-edit-page';
 
-import { title } from "@/utils/primitives";
+export const metadata: Metadata = {
+  title: 'Edit Roles - ' + process.env.NEXT_PUBLIC_WEB_TITLE,
+};
 
-export default function BlogPage() {
-  return (
-    <div>
-      <h1 className={title()}>Blog</h1>
-    </div>
-  );
+export default function Page() {
+  return <RolesEditPage />;
 }
