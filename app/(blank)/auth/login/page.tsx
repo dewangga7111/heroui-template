@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import { LogIn } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import AppTextInput from "@/components/common/app-text-input";
+import AppTextInput from "@/components/forms/app-text-input";
 import { Button, Card, CardBody, Form, Image } from "@heroui/react";
 import Footer from "@/components/footer";
 import logo from "@/assets/images/logo.png"
-import AppTextInputPassword from "@/components/common/app-text-input-password";
+import AppTextInputPassword from "@/components/forms/app-text-input-password";
 import { showSuccessToast } from "@/utils/common";
 import { isMobile } from "react-device-detect";
 

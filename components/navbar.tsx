@@ -7,83 +7,31 @@ import {
   NavbarContent,
   NavbarItem,
   Avatar,
-  Breadcrumbs,
-  BreadcrumbItem,
   Drawer,
   useDisclosure,
   Button,
   DrawerContent,
   DrawerBody,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
   Listbox,
   ListboxItem
 } from "@heroui/react";
 import { ThemeSwitch } from "@/components/theme-switch";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { EllipsisVertical, LogOut, Menu, User } from "lucide-react";
 import { MobileView, isMobile } from "react-device-detect";
 
-import { breadcrumbsItems } from "../config/breadcrumbs";
-import { useBreadcrumbs, Breadcrumb } from "@/context/breadcrumbs-context";
 import SidebarContent from "./sidebar/sidebar-content";
 import { useConfirmation } from "@/context/confirmation-context";
 import { showSuccessToast } from "@/utils/common";
-import { ManagedPopover } from "./common/managed-popover";
-
-const getBasePath = (path: string) => {
-  // Remove query/hash
-  let cleanPath = path.split(/[?#]/)[0].replace(/\/$/, "");
-
-  // Split into parts
-  const parts = cleanPath.split("/").filter(Boolean);
-
-  // If the last part looks like an ID (number or UUID-like), remove it
-  if (/^\d+$/.test(parts.at(-1) as any) || /^[A-Za-z0-9_-]{6,}$/.test(parts.at(-1) as any)) {
-    parts.pop();
-  }
-
-  return "/" + parts.join("/");
-}
-
-// 🔑 Recursive function to find the breadcrumb trail
-const findBreadcrumbTrail = (
-  items: any[],
-  pathname: string,
-  trail: Breadcrumb[] = []
-): Breadcrumb[] | null => {
-  for (const item of items) {
-    const newTrail = [...trail, { label: item.label, path: item.path }];
-
-    if (item.path == getBasePath(pathname)) {
-      return newTrail;
-    }
-
-    if (item.children) {
-      const childTrail = findBreadcrumbTrail(item.children, pathname, newTrail);
-      if (childTrail) {
-        return childTrail;
-      }
-    }
-  }
-  return null;
-};
+import { ManagedPopover } from "./managed-popover";
 
 export const Navbar = () => {
   const router = useRouter();
-  const pathname = usePathname();
-  const { breadcrumbs, setBreadcrumbs } = useBreadcrumbs();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { confirm } = useConfirmation();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
-
-  useEffect(() => {
-    const trail = findBreadcrumbTrail(breadcrumbsItems, pathname) || [];
-    setBreadcrumbs(trail);
-  }, [pathname, setBreadcrumbs]);
 
   if (!mounted) return null;
 
@@ -95,7 +43,7 @@ export const Navbar = () => {
         className="backdrop-blur-md rounded-bl-lg rounded-br-lg shadow-sm"
         position="sticky"
       >
-        {isMobile ? (
+        {isMobile && (
           <NavbarBrand>
             <Button
               isIconOnly
@@ -105,18 +53,6 @@ export const Navbar = () => {
             >
               <Menu size={20} />
             </Button>
-          </NavbarBrand>
-        ) : (
-          <NavbarBrand>
-            {breadcrumbs.length > 0 && (
-              <Breadcrumbs size="md">
-                {breadcrumbs.map((crumb, idx) => (
-                  <BreadcrumbItem key={idx} onPress={() => router.push(crumb.path as string)} isDisabled={!crumb.path} className="font-semibold">
-                    {crumb.label}
-                  </BreadcrumbItem>
-                ))}
-              </Breadcrumbs>
-            )}
           </NavbarBrand>
         )}
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { BreadcrumbProvider } from "@/context/breadcrumbs-context";
 import { PermissionProvider } from "@/context/permission-context";
 import { ConfirmationProvider } from "@/context/confirmation-context";
 
@@ -35,9 +34,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
         <NextThemesProvider {...themeProps}>
           <ConfirmationProvider>
             <PermissionProvider>
-              <BreadcrumbProvider>
-                {children}
-              </BreadcrumbProvider>
+              {children}
             </PermissionProvider>
           </ConfirmationProvider>
         </NextThemesProvider>

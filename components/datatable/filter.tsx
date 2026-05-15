@@ -12,10 +12,10 @@ import { Search, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { FilterField } from "@/types/filter";
-import AppDatePicker from "@/components/common/app-date-picker";
-import AppDateRangePicker from "@/components/common/app-date-range-picker";
-import AppAutocomplete from "./app-autocomplete";
-import AppTextInput from "./app-text-input";
+import AppDatePicker from "@/components/forms/app-date-picker";
+import AppDateRangePicker from "@/components/forms/app-date-range-picker";
+import AppAutocomplete from "../forms/app-autocomplete";
+import AppTextInput from "../forms/app-text-input";
 import { actionButtons, button } from "@/utils/primitives";
 
 interface DynamicFilterProps {

@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { RenderCellProps } from "@/types/table";
 import { showSuccessToast } from "@/utils/common";
 import { useConfirmation } from "@/context/confirmation-context";
-import { ManagedPopover } from "@/components/common/managed-popover";
+import { ManagedPopover } from "@/components/managed-popover";
 
 export default function RolesRenderCell({ item, columnKey }: RenderCellProps) {
   const key = String(columnKey);
@@ -25,7 +25,7 @@ export default function RolesRenderCell({ item, columnKey }: RenderCellProps) {
       return (
         <ManagedPopover
           placement="right"
-          trigger={ 
+          trigger={
             <Button
               variant="light"
               size="sm"
@@ -38,7 +38,7 @@ export default function RolesRenderCell({ item, columnKey }: RenderCellProps) {
           <Listbox aria-label="User actions" variant="flat">
             <ListboxItem
               key="permission"
-              startContent={<Lock size={13}/>}
+              startContent={<Lock size={13} />}
               onPress={() => {
                 router.push(`/roles/permission/${item.id}`);
               }}
@@ -47,7 +47,7 @@ export default function RolesRenderCell({ item, columnKey }: RenderCellProps) {
             </ListboxItem>
             <ListboxItem
               key="edit"
-              startContent={<Pencil size={13}/>}
+              startContent={<Pencil size={13} />}
               onPress={() => {
                 router.push(`/roles/edit/${item.id}`);
               }}
@@ -58,7 +58,7 @@ export default function RolesRenderCell({ item, columnKey }: RenderCellProps) {
               key="delete"
               className="text-danger"
               color="danger"
-              startContent={<Trash2 size={13}/>}
+              startContent={<Trash2 size={13} />}
               onPress={() => {
                 confirm({
                   message: "Are you sure you want to delete this data?",

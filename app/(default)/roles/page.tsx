@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 
-import Datatable from "@/components/common/datatable";
-import Filter from "@/components/common/filter";
+import Datatable from "@/components/datatable/datatable";
+import Filter from "@/components/datatable/filter";
 import { TableColumnType, TableRowType } from "@/types/table";
 import { FilterField } from "@/types/filter";
 import { AppDispatch, RootState } from "@/redux/store";
