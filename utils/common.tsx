@@ -1,5 +1,4 @@
-import { Tooltip, addToast, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@heroui/react";
-import { useState } from "react";
+import { Tooltip, toast } from "@heroui/react";
 
 export const formatEllipsis = (text: string, maxChars: number = 12): React.ReactNode => {
   if (!text) return "-";
@@ -9,26 +8,17 @@ export const formatEllipsis = (text: string, maxChars: number = 12): React.React
   const truncated = text.slice(0, maxChars) + "...";
 
   return (
-    <Tooltip content={text} delay={500} showArrow color="foreground">
-      <span className="cursor-help">{truncated}</span>
+    <Tooltip>
+      <Tooltip.Trigger>{truncated}</Tooltip.Trigger>
+      <Tooltip.Content>{text}</Tooltip.Content>
     </Tooltip>
   );
 };
 
 export const showSuccessToast = (msg: string) => {
-  addToast({
-    title: "Success",
-    description: msg,
-    color: 'success',
-    timeout: 3000,
-  })
-}
+  toast.success(msg, { timeout: 3000 });
+};
 
 export const showErrorToast = (msg: string) => {
-  addToast({
-    title: "Error",
-    description: msg,
-    color: 'danger',
-    timeout: 3000,
-  })
-}
+  toast.danger(msg, { timeout: 3000 });
+};

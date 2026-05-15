@@ -35,7 +35,8 @@ export interface DynamicTableProps {
   page: number;
   totalPage: number;
   totalRows: number;
-  doAdd: () => void;
+  topContent?: React.ReactNode;
+  doAdd?: () => void;
   onPageChange: (page: number) => void;
-  renderCell?: (item: TableRowType, columnKey: React.Key) => React.ReactNode;  // Fix: Use React.Key
+  renderCell?: (item: TableRowType, columnKey: React.Key) => React.ReactNode;
 }

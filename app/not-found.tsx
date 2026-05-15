@@ -25,7 +25,7 @@ export default function NotFoundPage() {
           <h1 className={title({ color: "red" })}>404 Not Found</h1>
           <p className="text-gray-600 mt-2">The page you are looking for doesn’t exist or has been moved.</p>
           <Button
-            color="primary"
+            variant="primary"
             className={`${button()} mt-5`}
             onPress={() => router.push("/")}
           >

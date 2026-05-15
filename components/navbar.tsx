@@ -1,20 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  Navbar as HeroNavbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  Avatar,
-  Drawer,
-  useDisclosure,
-  Button,
-  DrawerContent,
-  DrawerBody,
-  Listbox,
-  ListboxItem
-} from "@heroui/react";
+import { Avatar, Button, useOverlayState, Drawer, Dropdown } from "@heroui/react";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { useRouter } from "next/navigation";
 import { EllipsisVertical, LogOut, Menu, User } from "lucide-react";
@@ -23,11 +10,10 @@ import { MobileView, isMobile } from "react-device-detect";
 import SidebarContent from "./sidebar/sidebar-content";
 import { useConfirmation } from "@/context/confirmation-context";
 import { showSuccessToast } from "@/utils/common";
-import { ManagedPopover } from "./managed-popover";
 
 export const Navbar = () => {
   const router = useRouter();
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const drawerState = useOverlayState();
   const { confirm } = useConfirmation();
   const [mounted, setMounted] = useState(false);
 
@@ -37,108 +23,70 @@ export const Navbar = () => {
 
   return (
     <>
-      <HeroNavbar
-        maxWidth="full"
-        height="50px"
-        className="backdrop-blur-md rounded-bl-lg rounded-br-lg shadow-sm"
-        position="sticky"
-      >
+      <nav className="sticky top-0 z-10 flex items-center justify-between backdrop-blur-md rounded-bl-lg rounded-br-lg shadow-sm px-4 h-[50px] bg-overlay/80">
         {isMobile && (
-          <NavbarBrand>
-            <Button
-              isIconOnly
-              variant="light"
-              onPress={onOpen}
-              aria-label="Toggle Menu"
-            >
-              <Menu size={20} />
-            </Button>
-          </NavbarBrand>
+          <Button
+            isIconOnly
+            variant="ghost"
+            onPress={drawerState.open}
+            aria-label="Toggle Menu"
+          >
+            <Menu size={20} />
+          </Button>
         )}
 
-        {/* Right Section - Actions */}
-        <NavbarContent justify="end">
-          <NavbarItem className="flex items-center">
-            <ThemeSwitch />
-          </NavbarItem>
-          <NavbarItem className="flex items-center">
-            <Avatar
-              isBordered
-              src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
-              className="w-7 h-7 text-tiny"
-            />
+        <div className="ml-auto flex items-center gap-2">
+          <ThemeSwitch />
+          <div className="flex items-center">
+            <Avatar size="sm" className="ring-2 ring-accent ring-offset-1">
+              <Avatar.Image src="https://i.pravatar.cc/150?u=a042581f4e29026024d" alt="User" />
+              <Avatar.Fallback>JD</Avatar.Fallback>
+            </Avatar>
             <div className="mx-2 min-w-[120px]">
               <p className="text-sm font-medium ml-2">John Doe</p>
-              <p className="text-xs text-default-500 ml-2">Admin</p>
+              <p className="text-xs text-muted ml-2">Admin</p>
             </div>
-            <ManagedPopover
-              trigger={
-                <Button
-                  variant="light"
-                  size="sm"
-                  isIconOnly
-                >
-                  <EllipsisVertical size={20} />
-                </Button>
-              }
-            >
-              <Listbox aria-label="User actions" variant="flat">
-                <ListboxItem
-                  key="profile"
-                  startContent={<User size={13} />}
-                  onPress={() => {
-                  }}
-                >
-                  Profile
-                </ListboxItem>
-                <ListboxItem
-                  key="logout"
-                  className="text-danger"
-                  color="danger"
-                  startContent={<LogOut size={13} />}
-                  onPress={() => {
-                    confirm({
-                      message: "Are you sure you want to logout?",
-                      onConfirm: () => {
-                        showSuccessToast("You have been loged out!");
-                        router.push("/auth/login")
-                      },
-                    });
-                  }}
-                >
-                  Logout
-                </ListboxItem>
-              </Listbox>
-            </ManagedPopover>
-          </NavbarItem>
-        </NavbarContent>
-      </HeroNavbar>
+            <Dropdown>
+              <Dropdown.Trigger className="flex items-center justify-center w-8 h-8 rounded-md hover:bg-default cursor-pointer">
+                <EllipsisVertical size={20} />
+              </Dropdown.Trigger>
+              <Dropdown.Popover placement="bottom end" className="min-w-32">
+                <Dropdown.Menu aria-label="User actions">
+                  <Dropdown.Item id="profile" onAction={() => { }}>
+                    <span className="flex items-center gap-2"><User size={13} /> Profile</span>
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    id="logout"
+                    className="text-danger"
+                    onAction={() => {
+                      confirm({
+                        message: "Are you sure you want to logout?",
+                        onConfirm: () => {
+                          showSuccessToast("You have been logged out!");
+                          router.push("/auth/login");
+                        },
+                      });
+                    }}
+                  >
+                    <span className="flex items-center gap-2"><LogOut size={13} /> Logout</span>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown.Popover>
+            </Dropdown>
+          </div>
+        </div>
+      </nav>
+
       <MobileView>
-        <Drawer
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-          size="full"
-          placement="left"
-          motionProps={{
-            variants: {
-              enter: {
-                opacity: 1,
-                x: 0,
-              },
-              exit: {
-                x: -100,
-                opacity: 0,
-              },
-            },
-          }}
-        >
-          <DrawerContent>
-            {(onClose) => (
-              <DrawerBody>
-                <SidebarContent open={true} setOpen={() => { }} onClose={onClose} />
-              </DrawerBody>
-            )}
-          </DrawerContent>
+        <Drawer state={drawerState}>
+          <Drawer.Backdrop />
+          <Drawer.Content placement="left">
+            <Drawer.Dialog>
+              <Drawer.Body>
+                <SidebarContent open={true} setOpen={() => { }} onClose={drawerState.close} />
+              </Drawer.Body>
+            </Drawer.Dialog>
+          </Drawer.Content>
         </Drawer>
       </MobileView>
     </>

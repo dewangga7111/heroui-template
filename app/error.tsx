@@ -23,13 +23,10 @@ export default function Error({
       <span className={title({ size: 'sm' })} >Something went wrong!!!</span>
       <Button
         className="mt-4"
-        color="primary"
-        startContent={<RefreshCcw size={15} />}
-        onPress={
-          // Attempt to recover by trying to re-render the segment
-          () => reset()
-        }
+        variant="primary"
+        onPress={() => reset()}
       >
+        <RefreshCcw size={15} />
         Refresh
       </Button>
     </div>

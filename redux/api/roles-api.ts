@@ -107,7 +107,6 @@ import {
 } from "@/redux/slices/roles-slice";
 import { Role } from "@/types/role";
 import { TableFilter } from "@/types/table";
-import { data } from "framer-motion/client";
 import { rolesList } from "@/dummy/role";
 
 // ---- MOCK DATA ----
@@ -220,4 +219,3 @@ export const deleteRole =
       dispatch(errorRoles(error.message || "Failed to delete mock role"));
     }
   };
-

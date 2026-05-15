@@ -3,6 +3,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { Button } from "@heroui/react";
+import { PlusIcon } from "lucide-react";
+import { button } from "@/utils/primitives";
 
 import Datatable from "@/components/datatable/datatable";
 import Filter from "@/components/datatable/filter";
@@ -66,7 +69,14 @@ export default function RolesPage() {
           onPageChange={(page: number) => {
             dispatch(fetchRoles({ ...store.params, ...store.paging, page }));
           }}
-          doAdd={() => router.push("/roles/add")}
+          topContent={
+            <div className="flex justify-end">
+              <Button variant="primary" className={button()} onPress={() => router.push("/roles/add")}>
+                <PlusIcon size={16} />
+                Add
+              </Button>
+            </div>
+          }
         />
       </div>
     </RouteGuardProvider>

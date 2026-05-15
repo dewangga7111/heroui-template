@@ -1,22 +1,16 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Button,
-  Form,
-} from "@heroui/react";
-import { Search, ChevronDown } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState } from 'react';
+import { Card, Button, Form } from '@heroui/react';
+import { Search, ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-import { FilterField } from "@/types/filter";
-import AppDatePicker from "@/components/forms/app-date-picker";
-import AppDateRangePicker from "@/components/forms/app-date-range-picker";
-import AppAutocomplete from "../forms/app-autocomplete";
-import AppTextInput from "../forms/app-text-input";
-import { actionButtons, button } from "@/utils/primitives";
+import { FilterField } from '@/types/filter';
+import AppDatePicker from '@/components/forms/app-date-picker';
+import AppDateRangePicker from '@/components/forms/app-date-range-picker';
+import AppAutocomplete from '@/components/forms/app-autocomplete';
+import AppTextInput from '@/components/forms/app-text-input';
+import { actionButtons, button } from '@/utils/primitives';
 
 interface DynamicFilterProps {
   fields: FilterField[];
@@ -30,7 +24,7 @@ export default function DynamicFilter({
   onClear,
 }: DynamicFilterProps) {
   const [formValues, setFormValues] = useState<Record<string, any>>({});
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const handleChange = (key: string, value: any) => {
     setFormValues((prev) => ({ ...prev, [key]: value }));
@@ -58,20 +52,22 @@ export default function DynamicFilter({
   };
 
   return (
-    <Card className="px-1 mb-3 overflow-hidden">
+    <Card className="mb-3 overflow-hidden">
       {/* Header with toggle */}
-      <CardHeader
-        className="flex justify-between items-center cursor-pointer select-none h-[45px]"
+      <Card.Header
+        className="cursor-pointer select-none"
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        <span className="font-semibold text-md">Filter</span>
-        <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.25, ease: "easeInOut" }}
-        >
-          <ChevronDown size={18} />
-        </motion.div>
-      </CardHeader>
+        <div className="flex justify-between items-center w-full">
+          <span className="font-semibold text-md">Filter</span>
+          <motion.div
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+          >
+            <ChevronDown size={18} />
+          </motion.div>
+        </div>
+      </Card.Header>
 
       {/* Animated Body */}
       <AnimatePresence initial={false}>
@@ -79,11 +75,11 @@ export default function DynamicFilter({
           <motion.div
             key="filter-body"
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
+            animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
           >
-            <CardBody>
+            <Card.Content>
               <Form id="filterForm" onSubmit={handleSubmit}>
                 <div className="w-full flex flex-col gap-4">
                   <div className={`grid sm:grid-cols-3 gap-4`}>
@@ -91,30 +87,33 @@ export default function DynamicFilter({
                       const value = formValues[field.key];
 
                       switch (field.type) {
-                        case "input":
+                        case 'input':
                           return (
                             <AppTextInput
                               key={field.key}
                               label={field.label}
-                              placeholder={field.placeholder}
-                              value={value || ""}
-                              onChange={(e) => handleChange(field.key, e.target.value)}
+                              {...(field.placeholder !== undefined ? { placeholder: field.placeholder } : {})}
+                              value={value || ''}
+                              onChange={(val) =>
+                                handleChange(field.key, val)
+                              }
                             />
                           );
 
-                        case "autocomplete":
+                        case 'autocomplete':
                           return (
                             <AppAutocomplete
                               key={field.key}
                               label={field.label}
-                              placeholder={field.placeholder}
-                              selectedKey={value || ""}
+                              selectedKey={value || undefined}
                               items={field.options ?? []}
-                              onSelectionChange={(v) => handleChange(field.key, v)}
+                              onSelectionChange={(v: any) =>
+                                handleChange(field.key, v)
+                              }
                             />
                           );
 
-                        case "datepicker":
+                        case 'datepicker':
                           return (
                             <AppDatePicker
                               key={field.key}
@@ -124,7 +123,7 @@ export default function DynamicFilter({
                             />
                           );
 
-                        case "daterange":
+                        case 'daterange':
                           return (
                             <AppDateRangePicker
                               key={field.key}
@@ -143,8 +142,7 @@ export default function DynamicFilter({
                   <div className={actionButtons()}>
                     <Button
                       type="button"
-                      color="primary"
-                      variant="flat"
+                      variant="secondary"
                       className={button()}
                       onPress={handleClear}
                     >
@@ -152,16 +150,17 @@ export default function DynamicFilter({
                     </Button>
                     <Button
                       type="submit"
-                      color="primary"
+                      variant="primary"
                       className={button()}
-                      startContent={<Search size={15} />}
                     >
-                      Search
+                      <span className="flex items-center gap-2">
+                        <Search size={15} />Search
+                      </span>
                     </Button>
                   </div>
                 </div>
               </Form>
-            </CardBody>
+            </Card.Content>
           </motion.div>
         )}
       </AnimatePresence>

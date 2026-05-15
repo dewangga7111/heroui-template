@@ -1,22 +1,16 @@
 "use client";
 
-import {
-  Button,
-  getKeyValue,
-  Listbox,
-  ListboxItem,
-} from "@heroui/react";
+import { Dropdown } from "@heroui/react";
 import { EllipsisVertical, Trash2, Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { RenderCellProps } from "@/types/table";
 import { formatEllipsis, showSuccessToast } from "@/utils/common";
 import { useConfirmation } from "@/context/confirmation-context";
-import { ManagedPopover } from "@/components/managed-popover";
 
 export default function UsersRenderCell({ item, columnKey }: RenderCellProps) {
   const key = String(columnKey);
-  const cellValue = getKeyValue(item, key);
+  const cellValue = (item as any)[key];
   const router = useRouter();
   const { confirm } = useConfirmation();
 
@@ -26,46 +20,30 @@ export default function UsersRenderCell({ item, columnKey }: RenderCellProps) {
 
     case "action":
       return (
-        <ManagedPopover
-          placement="right"
-          trigger={
-            <Button
-              variant="light"
-              size="sm"
-              isIconOnly
-            >
-              <EllipsisVertical size={18} />
-            </Button>
-          }
-        >
-          <Listbox aria-label="User actions" variant="flat">
-            <ListboxItem
-              key="edit"
-              startContent={<Pencil size={13} />}
-              onPress={() => {
-                router.push(`/users/edit/${item.id}`);
-              }}
-            >
-              Edit
-            </ListboxItem>
-            <ListboxItem
-              key="delete"
-              className="text-danger"
-              color="danger"
-              startContent={<Trash2 size={13} />}
-              onPress={() => {
-                confirm({
-                  message: "Are you sure you want to delete this data?",
-                  onConfirm: () => {
-                    showSuccessToast("Data Deleted Successfully");
-                  },
-                });
-              }}
-            >
-              Delete
-            </ListboxItem>
-          </Listbox>
-        </ManagedPopover>
+        <Dropdown>
+          <Dropdown.Trigger className="flex items-center justify-center w-8 h-8 rounded-md hover:bg-default cursor-pointer">
+            <EllipsisVertical size={18} />
+          </Dropdown.Trigger>
+          <Dropdown.Popover placement="right" className="min-w-32">
+            <Dropdown.Menu aria-label="User actions">
+              <Dropdown.Item id="edit" onAction={() => router.push(`/users/edit/${item.id}`)}>
+                <span className="flex items-center gap-2"><Pencil size={13} /> Edit</span>
+              </Dropdown.Item>
+              <Dropdown.Item
+                id="delete"
+                className="text-danger"
+                onAction={() => {
+                  confirm({
+                    message: "Are you sure you want to delete this data?",
+                    onConfirm: () => showSuccessToast("Data Deleted Successfully"),
+                  });
+                }}
+              >
+                <span className="flex items-center gap-2"><Trash2 size={13} /> Delete</span>
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown.Popover>
+        </Dropdown>
       );
 
     default:

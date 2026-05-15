@@ -30,16 +30,13 @@ export default function SidebarMenuItem({
           ) : (
             <div className="h-[30px] w-[5px] ml-2 mr-1"></div>
           )}
-          <div
+          <button
+            type="button"
             onClick={() => toggleMenu(item.key)}
-            className={`flex items-center cursor-pointer p-3 my-1 mr-2 rounded-lg text-small w-[100%]
-              ${mounted && theme === "light" ? "hover:bg-primary-50 hover:text-primary-700" : "hover:bg-primary-700 hover:text-primary-50"}
-              ${mounted && isActive && theme === "light"
-                ? "bg-primary-100 text-primary-700 font-semibold"
-                : ""}
-              ${mounted && isActive && theme === "dark"
-                ? "bg-primary-700 text-primary-100 font-semibold"
-                : ""}`}
+            className={`flex items-center cursor-pointer p-3 my-1 mr-2 rounded-lg text-sm w-[100%] border-none
+              ${mounted && theme === "light"
+                ? isActive ? "bg-primary-100 text-primary-700 font-semibold hover:bg-primary-50" : "bg-transparent hover:bg-primary-50 hover:text-primary-700"
+                : isActive ? "bg-primary-700 text-primary-100 font-semibold hover:bg-primary-700" : "bg-transparent hover:bg-primary-700 hover:text-primary-50"}`}
           >
             <div className={`${open && "mr-1"}`}>{item.icon}</div>
             {open && (
@@ -52,7 +49,7 @@ export default function SidebarMenuItem({
                 />
               </div>
             )}
-          </div>
+          </button>
         </div>
 
         {/* Children with animation */}
@@ -63,26 +60,24 @@ export default function SidebarMenuItem({
         >
           <div className="transition-all duration-300 ease-in-out ml-8">
             {item.children.map((child: any) => (
-              <div
+              <button
+                type="button"
                 key={child.key}
                 onClick={() => {
                   onClose?.()
                   router.push(child.path!)
                 }}
+                className="w-full text-left bg-transparent border-none"
               >
                 <div
-                  className={`flex py-2 px-3 my-1 items-center rounded-md cursor-pointer text-tiny mr-2
-                    ${mounted && theme === "light" ? "hover:bg-primary-50 hover:text-primary-700" : "hover:bg-primary-700 hover:text-primary-50"}
-                    ${mounted && child.path === firstPath && theme === "light"
-                      ? "bg-primary-100 text-primary-700 font-semibold"
-                      : ""}
-                    ${mounted && child.path === firstPath && theme === "dark"
-                      ? "bg-primary-700 text-primary-100 font-semibold"
-                      : ""}`}
+                  className={`flex py-2 px-3 my-1 items-center rounded-md cursor-pointer text-[13px] mr-2
+                    ${mounted && theme === "light"
+                      ? child.path === firstPath ? "text-primary-700 font-semibold hover:text-primary-700" : "hover:text-primary-700"
+                      : child.path === firstPath ? "text-primary-100 font-semibold hover:text-primary-100" : "hover:text-primary-50"}`}
                 >
                   {child.label}
                 </div>
-              </div>
+              </button>
             )
             )}
           </div>
@@ -93,13 +88,14 @@ export default function SidebarMenuItem({
 
   // Normal item
   return (
-    <div
+    <button
+      type="button"
       key={item.key}
       onClick={() => {
         onClose?.()
         router.push(item.path!)
       }}
-      className="flex items-center"
+      className="flex items-center w-full bg-transparent border-none"
     >
       {item.path === firstPath && open ? (
         <div className="h-[30px] w-[5px] bg-primary-300 ml-2 mr-1 rounded-lg"></div>
@@ -107,18 +103,14 @@ export default function SidebarMenuItem({
         <div className="h-[30px] w-[5px] ml-2 mr-1"></div>
       )}
       <div
-        className={`flex p-3 my-1 items-center mr-2 w-[100%] rounded-lg cursor-pointer text-small
-          ${mounted && theme === "light" ? "hover:bg-primary-50 hover:text-primary-700" : "hover:bg-primary-700 hover:text-primary-50"}
-          ${mounted && firstPath === item.path && theme === "light"
-            ? "bg-primary-100 text-primary-700 font-semibold"
-            : ""}
-          ${mounted && firstPath === item.path && theme === "dark"
-            ? "bg-primary-700 text-primary-100 font-semibold"
-            : ""}`}
+        className={`flex p-3 my-1 items-center mr-2 w-[100%] rounded-lg cursor-pointer text-sm
+          ${mounted && theme === "light"
+            ? firstPath === item.path ? "bg-primary-100 text-primary-700 font-semibold hover:bg-primary-50" : "hover:bg-primary-50 hover:text-primary-700"
+            : firstPath === item.path ? "bg-primary-700 text-primary-100 font-semibold" : "hover:bg-primary-700 hover:text-primary-50"}`}
       >
         <div className={`${open && "mr-1"}`}>{item.icon}</div>
         {open && item.label}
       </div>
-    </div>
+    </button>
   );
 }

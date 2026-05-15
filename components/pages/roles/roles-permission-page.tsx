@@ -3,15 +3,9 @@
 import {
   Button,
   Card,
-  CardBody,
   Form,
   Switch,
   Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
 } from "@heroui/react";
 import { Save } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -55,17 +49,13 @@ function RolesPermissionContent() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     confirm({
       message: "Are you sure you want to save this data?",
-      onConfirm: () => {
-        doSave();
-      },
+      onConfirm: () => doSave(),
     });
   };
 
   const doSave = () => {
-    console.log("Saving permissions:", permissions);
     showSuccessToast("Data Saved Successfully");
     router.push("/roles");
   };
@@ -73,58 +63,67 @@ function RolesPermissionContent() {
   return (
     <div>
       <Card className="px-1">
-        <CardBody>
+        <Card.Content>
           <span className="text-lg">Role: <span className="font-medium">Admin</span></span>
 
           <Form className="mt-3" onSubmit={handleSubmit}>
             <div className={form()}>
-              <Table removeWrapper aria-label="Permissions table">
-                <TableHeader>
-                  <TableColumn>Menu</TableColumn>
-                  <TableColumn width={150} align="center">Read</TableColumn>
-                  <TableColumn width={150} align="center">Add</TableColumn>
-                  <TableColumn width={150} align="center">Edit</TableColumn>
-                  <TableColumn width={150} align="center">Delete</TableColumn>
-                </TableHeader>
+              <Table>
+                <Table.Content aria-label="Permissions table">
+                  <Table.Header>
+                    <Table.Column>Menu</Table.Column>
+                    <Table.Column>Read</Table.Column>
+                    <Table.Column>Add</Table.Column>
+                    <Table.Column>Edit</Table.Column>
+                    <Table.Column>Delete</Table.Column>
+                  </Table.Header>
 
-                <TableBody>
-                  {permissions.map((menu) => (
-                    <TableRow key={menu.id}>
-                      <TableCell>{menu.name}</TableCell>
-                      <TableCell>
-                        <Switch
-                          isSelected={menu.read}
-                          onValueChange={() => handleToggle(menu.id, "read")}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <Switch
-                          isSelected={menu.add}
-                          onValueChange={() => handleToggle(menu.id, "add")}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <Switch
-                          isSelected={menu.edit}
-                          onValueChange={() => handleToggle(menu.id, "edit")}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <Switch
-                          isSelected={menu.delete}
-                          onValueChange={() => handleToggle(menu.id, "delete")}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
+                  <Table.Body>
+                    {permissions.map((menu) => (
+                      <Table.Row key={menu.id}>
+                        <Table.Cell>{menu.name}</Table.Cell>
+                        <Table.Cell>
+                          <Switch
+                            isSelected={menu.read}
+                            onChange={() => handleToggle(menu.id, "read")}
+                          >
+                            <Switch.Control><Switch.Thumb /></Switch.Control>
+                          </Switch>
+                        </Table.Cell>
+                        <Table.Cell>
+                          <Switch
+                            isSelected={menu.add}
+                            onChange={() => handleToggle(menu.id, "add")}
+                          >
+                            <Switch.Control><Switch.Thumb /></Switch.Control>
+                          </Switch>
+                        </Table.Cell>
+                        <Table.Cell>
+                          <Switch
+                            isSelected={menu.edit}
+                            onChange={() => handleToggle(menu.id, "edit")}
+                          >
+                            <Switch.Control><Switch.Thumb /></Switch.Control>
+                          </Switch>
+                        </Table.Cell>
+                        <Table.Cell>
+                          <Switch
+                            isSelected={menu.delete}
+                            onChange={() => handleToggle(menu.id, "delete")}
+                          >
+                            <Switch.Control><Switch.Thumb /></Switch.Control>
+                          </Switch>
+                        </Table.Cell>
+                      </Table.Row>
+                    ))}
+                  </Table.Body>
+                </Table.Content>
               </Table>
 
               <div className={`${actionButtons()} mt-3`}>
                 <Button
                   type="button"
-                  color="primary"
-                  variant="flat"
+                  variant="secondary"
                   className={button()}
                   onPress={router.back}
                 >
@@ -132,16 +131,16 @@ function RolesPermissionContent() {
                 </Button>
                 <Button
                   type="submit"
-                  color="primary"
+                  variant="primary"
                   className={button()}
-                  startContent={<Save size={15} />}
                 >
+                  <Save size={15} />
                   Save
                 </Button>
               </div>
             </div>
           </Form>
-        </CardBody>
+        </Card.Content>
       </Card>
     </div>
   );

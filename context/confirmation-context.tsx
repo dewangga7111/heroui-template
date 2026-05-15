@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@heroui/react";
+import { Modal, Button, useOverlayState } from "@heroui/react";
 
 type ConfirmParams = {
   message: string;
@@ -18,12 +18,13 @@ type ConfirmationContextType = {
 const ConfirmationContext = createContext<ConfirmationContextType | undefined>(undefined);
 
 export const ConfirmationProvider = ({ children }: { children: ReactNode }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [onConfirmAction, setOnConfirmAction] = useState<(() => void) | null>(null);
   const [header, setHeader] = useState("Confirmation");
   const [cancelText, setCancelText] = useState("No");
   const [confirmText, setConfirmText] = useState("Yes");
+
+  const modalState = useOverlayState();
 
   const confirm = ({
     message,
@@ -32,54 +33,49 @@ export const ConfirmationProvider = ({ children }: { children: ReactNode }) => {
     cancelText = "No",
     confirmText = "Yes",
   }: ConfirmParams) => {
-    //close all active popovers
     window.dispatchEvent(new Event("close-all-popovers"));
     setMessage(message);
     setOnConfirmAction(() => onConfirm);
     setHeader(header);
     setCancelText(cancelText);
     setConfirmText(confirmText);
-    setIsOpen(true);
+    modalState.open();
   };
 
   const handleConfirm = () => {
     onConfirmAction?.();
-    setIsOpen(false);
+    modalState.close();
   };
 
   const handleCancel = () => {
-    setIsOpen(false);
+    modalState.close();
   };
 
   return (
     <ConfirmationContext.Provider value={{ confirm }}>
       {children}
 
-      {/* ✅ Global Modal Rendered Once */}
-      <Modal
-        isOpen={isOpen}
-        onOpenChange={setIsOpen}
-        isDismissable={false}
-        backdrop="blur"
-        placement="center"
-        hideCloseButton={true}
-      >
-        <ModalContent>
-          <ModalHeader className="justify-center text-center text-lg font-semibold">
-            {header}
-          </ModalHeader>
-          <ModalBody className="text-center">
-            <p className="text-default-600">{message}</p>
-          </ModalBody>
-          <ModalFooter className="flex justify-center gap-4">
-            <Button variant="flat" color="primary" onPress={handleCancel}>
-              {cancelText}
-            </Button>
-            <Button color="primary" onPress={handleConfirm}>
-              {confirmText}
-            </Button>
-          </ModalFooter>
-        </ModalContent>
+      <Modal state={modalState}>
+        <Modal.Backdrop isDismissable={false}>
+          <Modal.Container placement="center" size="sm">
+            <Modal.Dialog>
+              <Modal.Header className="justify-center text-center text-lg font-semibold">
+                {header}
+              </Modal.Header>
+              <Modal.Body className="text-center">
+                <p className="text-muted">{message}</p>
+              </Modal.Body>
+              <Modal.Footer className="flex justify-center gap-4">
+                <Button variant="secondary" onPress={handleCancel} fullWidth>
+                  {cancelText}
+                </Button>
+                <Button variant="primary" onPress={handleConfirm} fullWidth>
+                  {confirmText}
+                </Button>
+              </Modal.Footer>
+            </Modal.Dialog>
+          </Modal.Container>
+        </Modal.Backdrop>
       </Modal>
     </ConfirmationContext.Provider>
   );

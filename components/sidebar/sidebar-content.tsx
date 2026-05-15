@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button, Tooltip, ScrollShadow, Image } from "@heroui/react";
+import { Button, Tooltip, ScrollShadow,  } from "@heroui/react";
 import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
@@ -61,25 +61,22 @@ export default function SidebarContent({ open, setOpen, onClose }: SidebarConten
         </div>
       ) : (
         <div className="flex items-center justify-between p-3">
-          <Tooltip
-            content={open ? "Close Sidebar" : "Open Sidebar"}
-            showArrow
-            placement="right"
-            color="foreground"
-            closeDelay={0}
-            delay={500}
-            size="sm"
-          >
-            <Button
-              isIconOnly
-              variant="light"
-              onPress={() => setOpen(!open)}
-              aria-label="Toggle Menu"
-            >
-              <Menu size={20} />
-            </Button>
+          <Tooltip>
+            <Tooltip.Trigger>
+              <Button
+                isIconOnly
+                variant="ghost"
+                onPress={() => setOpen(!open)}
+                aria-label="Toggle Menu"
+              >
+                <Menu size={20} />
+              </Button>
+            </Tooltip.Trigger>
+            <Tooltip.Content>
+              {open ? "Close Sidebar" : "Open Sidebar"}
+            </Tooltip.Content>
           </Tooltip>
-          {open && <span className="font-bold"><Image src={logo.src} alt="Logo" height={50} /></span>}
+          {open && <span className="font-bold"><img src={logo.src} alt="Logo" className="h-10 w-auto object-contain" /></span>}
         </div>
       )}
 

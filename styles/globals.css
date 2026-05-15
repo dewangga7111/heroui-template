@@ -1,7 +1,17 @@
-@import "tailwindcss";
+@import "@heroui/styles";
 
 @config "../tailwind.config.js";
 
-.heroui-popover[aria-hidden="false"] {
-  z-index: 1000 !important; /* ensure popovers are below modals */
+@theme inline {
+  --color-primary-50: color-mix(in oklab, var(--color-accent) 8%, white);
+  --color-primary-100: color-mix(in oklab, var(--color-accent) 15%, white);
+  --color-primary-200: color-mix(in oklab, var(--color-accent) 30%, white);
+  --color-primary-300: color-mix(in oklab, var(--color-accent) 45%, white);
+  --color-primary-400: color-mix(in oklab, var(--color-accent) 60%, white);
+  --color-primary-500: var(--color-accent);
+  --color-primary-600: color-mix(in oklab, var(--color-accent) 85%, black);
+  --color-primary-700: color-mix(in oklab, var(--color-accent) 70%, black);
+  --color-primary-800: color-mix(in oklab, var(--color-accent) 55%, black);
+  --color-primary-900: color-mix(in oklab, var(--color-accent) 40%, black);
+  --color-primary: var(--color-accent);
 }

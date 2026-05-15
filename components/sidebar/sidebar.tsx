@@ -18,9 +18,8 @@ export default function Sidebar() {
   return (
     <BrowserView>
       <Card
-        className={`h-screen sticky top-0 transition-all duration-300 rounded-none 
+        className={`h-screen sticky top-0 transition-all duration-300 rounded-none shadow-sm p-0
           ${open ? "w-64" : "w-16"} flex flex-col`}
-        shadow="sm"
       >
         <SidebarContent open={open} setOpen={setOpen} />
       </Card>

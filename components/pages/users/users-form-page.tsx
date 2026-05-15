@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, CardBody, Form } from "@heroui/react";
+import { Button, Card, Form } from "@heroui/react";
 import { Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -50,8 +50,8 @@ function UsersFormContent({ isEdit }: Props) {
 
   return (
     <div>
-      <Card className="px-1">
-        <CardBody>
+      <Card>
+        <Card.Content>
           <Form onSubmit={handleSubmit}>
             <div className={form()}>
               <div className={inputContainer()}>
@@ -84,8 +84,7 @@ function UsersFormContent({ isEdit }: Props) {
               <div className={actionButtons()}>
                 <Button
                   type="button"
-                  color="primary"
-                  variant="flat"
+                  variant="secondary"
                   className={button()}
                   onPress={router.back}
                 >
@@ -93,16 +92,16 @@ function UsersFormContent({ isEdit }: Props) {
                 </Button>
                 <Button
                   type="submit"
-                  color="primary"
+                  variant="primary"
                   className={button()}
-                  startContent={<Save size={15} />}
                 >
+                  <Save size={15} />
                   Save
                 </Button>
               </div>
             </div>
           </Form>
-        </CardBody>
+        </Card.Content>
       </Card>
     </div>
   );

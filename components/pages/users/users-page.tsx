@@ -3,6 +3,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { Button } from "@heroui/react";
+import { PlusIcon } from "lucide-react";
+import { button } from "@/utils/primitives";
 
 import Datatable from "@/components/datatable/datatable";
 import Filter from "@/components/datatable/filter";
@@ -10,6 +13,7 @@ import { TableColumnType, TableRowType } from "@/types/table";
 import { FilterField } from "@/types/filter";
 import { AppDispatch, RootState } from "@/redux/store";
 import { fetchUsers } from "@/redux/api/users-api";
+import { fetchRoles } from "@/redux/api/roles-api";
 import { useLoading } from "@/hooks/useLoading";
 import { clearUsers } from "@/redux/slices/users-slice";
 import { RouteGuardProvider } from "@/context/route-guard-context";
@@ -19,6 +23,7 @@ export default function UsersPage() {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const store = useSelector((state: RootState) => state.users);
+  const rolesStore = useSelector((state: RootState) => state.roles);
   const isLoading = useLoading("users");
 
   const fields: FilterField[] = [
@@ -28,9 +33,9 @@ export default function UsersPage() {
       key: "role",
       label: "Role",
       placeholder: "Select role",
-      options: (store.data ?? []).map((opt) => ({
-        label: opt.name,
-        value: opt.name,
+      options: (rolesStore.data ?? []).map((opt) => ({
+        label: opt.role_name,
+        value: opt.role_name,
       })),
     },
     { type: "datepicker", key: "joinedAt", label: "Joined Date" },
@@ -51,6 +56,7 @@ export default function UsersPage() {
 
   useEffect(() => {
     dispatch(fetchUsers({ ...store.params, ...store.paging }));
+    dispatch(fetchRoles({}));
 
     return () => {
       dispatch(clearUsers());
@@ -80,7 +86,14 @@ export default function UsersPage() {
           onPageChange={(page: number) => {
             dispatch(fetchUsers({ ...store.params, ...store.paging, page }));
           }}
-          doAdd={() => router.push("/users/add")}
+          topContent={
+            <div className="flex justify-end">
+              <Button variant="primary" className={button()} onPress={() => router.push("/users/add")}>
+                <PlusIcon size={16} />
+                Add
+              </Button>
+            </div>
+          }
         />
       </div>
     </RouteGuardProvider>

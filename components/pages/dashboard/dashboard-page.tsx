@@ -1,8 +1,7 @@
-import { Link } from "@heroui/link";
-import { Snippet } from "@heroui/snippet";
-import { Code } from "@heroui/code";
-import { Card, CardBody } from "@heroui/card";
-import { button as buttonStyles } from "@heroui/theme";
+"use client";
+
+import { Link } from "@heroui/react";
+import { Card } from "@heroui/react";
 import { Palette, Shield, Github } from "lucide-react";
 
 import { title, subtitle } from "@/utils/primitives";
@@ -18,24 +17,20 @@ export default function DashboardPage() {
           websites regardless of your design experience.
         </span>
         <div className={subtitle({ class: "mt-4" })}>
-          Beautiful, fast and modern React UI library. awdas
+          Beautiful, fast and modern React UI library.
         </div>
       </div>
 
       <div className="flex gap-3">
         <Link
-          isExternal
-          className={buttonStyles({
-            color: "primary",
-            radius: "full",
-            variant: "shadow",
-          })}
+          href="#"
+          className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium bg-accent text-accent-foreground shadow hover:opacity-90"
         >
           Documentation
         </Link>
         <Link
-          isExternal
-          className={buttonStyles({ variant: "bordered", radius: "full" })}
+          href="https://github.com/heroui-inc/heroui"
+          className="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium border border-border hover:bg-default"
         >
           <Github size={20} />
           GitHub
@@ -43,39 +38,38 @@ export default function DashboardPage() {
       </div>
 
       <div className="mt-8">
-        <Snippet hideCopyButton hideSymbol variant="bordered">
-          <span>
-            Get started by editing <Code color="primary">app/page.tsx</Code>
-          </span>
-        </Snippet>
+        <div className="border border-border rounded-lg px-4 py-3 text-sm font-mono">
+          Get started by editing{" "}
+          <code className="text-accent font-medium">app/page.tsx</code>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 w-full max-w-5xl px-4">
-        <Card shadow="sm" className="rounded-2xl">
-          <CardBody className="flex flex-col items-center text-center p-6">
-            <h3 className="font-semibold text-lg mb-2">Fast & Responsive</h3>
-            <p className="text-default-500 text-sm">
+        <Card className="shadow-sm rounded-2xl">
+          <Card.Content className="flex flex-col items-center text-center p-6">
+            <h3 className="font-semibold text-lg mb-2">Fast &amp; Responsive</h3>
+            <p className="text-muted text-sm">
               Optimized for performance with built-in responsive design.
             </p>
-          </CardBody>
+          </Card.Content>
         </Card>
-        <Card shadow="sm" className="rounded-2xl">
-          <CardBody className="flex flex-col items-center text-center p-6">
+        <Card className="shadow-sm rounded-2xl">
+          <Card.Content className="flex flex-col items-center text-center p-6">
             <Palette className="text-violet-500 mb-4" size={32} />
             <h3 className="font-semibold text-lg mb-2">Beautiful UI</h3>
-            <p className="text-default-500 text-sm">
+            <p className="text-muted text-sm">
               Pre-styled components and theming to match your brand.
             </p>
-          </CardBody>
+          </Card.Content>
         </Card>
-        <Card shadow="sm" className="rounded-2xl">
-          <CardBody className="flex flex-col items-center text-center p-6">
+        <Card className="shadow-sm rounded-2xl">
+          <Card.Content className="flex flex-col items-center text-center p-6">
             <Shield className="text-success mb-4" size={32} />
             <h3 className="font-semibold text-lg mb-2">Secure by Default</h3>
-            <p className="text-default-500 text-sm">
+            <p className="text-muted text-sm">
               Built with best practices to keep your app safe.
             </p>
-          </CardBody>
+          </Card.Content>
         </Card>
       </div>
     </section>
