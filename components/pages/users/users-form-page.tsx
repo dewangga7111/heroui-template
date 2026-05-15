@@ -14,19 +14,23 @@ import { RootState } from "@/redux/store";
 import { actionButtons, button, form, inputContainer } from "@/utils/primitives";
 import { RouteGuardProvider } from "@/context/route-guard-context";
 
-function UsersAddContent() {
+interface Props {
+  isEdit?: boolean;
+}
+
+function UsersFormContent({ isEdit }: Props) {
   const router = useRouter();
   const store = useSelector((state: RootState) => state.users);
   const { confirm } = useConfirmation();
 
   useEffect(() => {
     if (store.success) {
-      showSuccessToast("Data Saved Successfully")
-      router.push("/users")
+      showSuccessToast("Data Saved Successfully");
+      router.push("/users");
     } else if (store.error) {
-      showErrorToast(store.error)
+      showErrorToast(store.error);
     }
-  }, [store.loading])
+  }, [store.loading]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,7 +38,7 @@ function UsersAddContent() {
     confirm({
       message: "Are you sure you want to save this data?",
       onConfirm: () => {
-        doSave(data)
+        doSave(data);
       },
     });
   };
@@ -42,7 +46,7 @@ function UsersAddContent() {
   const doSave = (data: any) => {
     showSuccessToast("Data Saved Successfully");
     router.push("/users");
-  }
+  };
 
   return (
     <div>
@@ -53,30 +57,25 @@ function UsersAddContent() {
               <div className={inputContainer()}>
                 <AppTextInput
                   isRequired
-                  key='firstName'
                   name='firstName'
                   label='First Name'
                 />
                 <AppTextInput
                   isRequired
-                  key='lastName'
                   name='lastName'
                   label='Last Name'
                 />
                 <AppTextInput
-                  key='email'
                   name='email'
                   label='Email'
                   type="email"
                 />
                 <AppTextInput
-                  key='phone'
                   name='phone'
                   label='Phone'
                   type="number"
                 />
                 <AppTextarea
-                  key='address'
                   name='address'
                   label='Address'
                 />
@@ -109,10 +108,10 @@ function UsersAddContent() {
   );
 }
 
-export default function UsersAddPage() {
+export default function UsersFormPage({ isEdit }: Props) {
   return (
-    <RouteGuardProvider pageId="USERS_PAGE" access="create">
-      <UsersAddContent />
+    <RouteGuardProvider pageId="USERS_PAGE" access={isEdit ? "update" : "create"}>
+      <UsersFormContent isEdit={isEdit} />
     </RouteGuardProvider>
   );
 }

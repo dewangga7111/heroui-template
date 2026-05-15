@@ -14,19 +14,23 @@ import { RootState } from "@/redux/store";
 import { actionButtons, button, form, inputContainer } from "@/utils/primitives";
 import { RouteGuardProvider } from "@/context/route-guard-context";
 
-function RolesAddContent() {
+interface Props {
+  isEdit?: boolean;
+}
+
+function RolesFormContent({ isEdit }: Props) {
   const router = useRouter();
   const store = useSelector((state: RootState) => state.roles);
   const { confirm } = useConfirmation();
 
   useEffect(() => {
     if (store.success) {
-      showSuccessToast("Data Saved Successfully")
-      router.push("/roles")
+      showSuccessToast("Data Saved Successfully");
+      router.push("/roles");
     } else if (store.error) {
-      showErrorToast(store.error)
+      showErrorToast(store.error);
     }
-  }, [store.loading])
+  }, [store.loading]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,7 +38,7 @@ function RolesAddContent() {
     confirm({
       message: "Are you sure you want to save this data?",
       onConfirm: () => {
-        doSave(data)
+        doSave(data);
       },
     });
   };
@@ -42,7 +46,7 @@ function RolesAddContent() {
   const doSave = (data: any) => {
     showSuccessToast("Data Saved Successfully");
     router.push("/roles");
-  }
+  };
 
   return (
     <div>
@@ -53,13 +57,11 @@ function RolesAddContent() {
               <div className={inputContainer()}>
                 <AppTextInput
                   isRequired
-                  key='role_name'
                   name='role_name'
                   label='Name'
                 />
                 <AppTextarea
                   isRequired
-                  key='description'
                   name='description'
                   label='Description'
                 />
@@ -92,10 +94,10 @@ function RolesAddContent() {
   );
 }
 
-export default function RolesAddPage() {
+export default function RolesFormPage({ isEdit }: Props) {
   return (
-    <RouteGuardProvider pageId="ROLES_PAGE" access="create">
-      <RolesAddContent />
+    <RouteGuardProvider pageId="ROLES_PAGE" access={isEdit ? "update" : "create"}>
+      <RolesFormContent isEdit={isEdit} />
     </RouteGuardProvider>
   );
 }
